@@ -7,9 +7,9 @@ downloadDir: '{{ homeDir }}/tmp'
 #repoName:        ### Setup in playbook/Vars; for changable, run playbook with --extra-vars (see rpmbuild example)
 #
 gitHubServer: github.com
-gitHubCompany: artsalliancemedia
-gitUser: aamdeployuser
-gitToken: aec1481621c8c224c88bf88e5620018077dbe77a
-gitPass: "D;|D598u#&k67:t,wdc$hQhSPH`Yf0"
+gitHubCompany: company
+gitUser: user
+gitToken: token
+gitPass: pass
 #gitTag:        ## tag/release
 
