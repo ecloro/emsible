@@ -1,0 +1,39 @@
+---
+
+- name: Install yumRepo related packages
+  package: "name='{{ item.name }}' state='{{ item.state }}'"
+  with_items: '{{ yumRepo_pkgs }}'
+
+#(!)# nginx-server should already be installed: nginx-server role is setup in meta/main.yml as a dependency.
+
+- name: Ensure repoDir exist
+  file: path={{ repoDir }} state=directory
+
+- name: Add index file to DocumentRoot
+  copy: 
+    src: '{{ indexFile }}'
+    dest: '{{ repoDir }}'
+
+- name: Remove nginx default.conf file
+  file: 
+    path: /etc/nginx/conf.d/default.conf
+    state: absent
+  ignore_errors: yes
+
+- name: Add default yumRepo server config file in nginx
+  template:
+    src: yumRepo.conf.j2
+    dest: /etc/nginx/conf.d/yumRepo.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - reload nginx
+
+- name: Create yumRepo directory structure
+  file: 
+    path: '{{ repoDir }}/{{ item.path0 }}/{{ item.path1 }}'
+    state: directory
+    owner: '{{ localUser }}'
+    group: '{{ localUser }}'
+  with_items: '{{ dirTree }}'

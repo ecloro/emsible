@@ -1,0 +1,22 @@
+---
+- name: test add-host-to-inventory
+  hosts: localhosts
+  #gather_facts: no
+  #vars:
+  #  add_hosts:
+  #    - ip: 172.28.17.40
+  #      name: yumRepo-server
+  #      port: 22
+  #      group: tmpGroup
+  #roles:
+    #- role: add-host-to-inventory
+    #- { role: 'add-host-to-inventory', add_hosts.ip="172.28.17.40", add_hosts.name="yumRepo-server", add_hosts.port=22, add_hosts.group=tmpGroup }
+  tasks:
+    - name: add new host
+      add_host: hostname=172.28.17.40, name=yumRepo-server, groupname=tmpHosts
+
+- name: test added host
+  hosts: tmpHosts
+  tasks:
+    - name: ping all hosts
+      ping:

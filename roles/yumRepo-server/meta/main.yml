@@ -1,0 +1,26 @@
+---
+dependencies:
+  ## Add repo.aam.local to /etc/hosts
+  #- { role: 'add-host-to-etcHosts', add_hosts.ip: 172.30.14.33, add_hosts.name: repo.aam.local }
+  #TODO fix role to run on either localhost or remotehost (currently supports localhost only)
+
+  ## OS Setup
+  #role: install-epel-scl-repos -> moved to playbook as 1st role (to include all required pkgs)
+  - { role: os-install-addons-pkgs }
+  
+  ## OS Update
+  - { role: 'os-update', system_update_restart: "true" }
+  ## Tests in container: disable Reboot
+  #- { role: 'os-update', system_update_restart: "false" }
+
+  ## rpmbuilder User
+  #VAR: localuser (see defaults/main.yml)
+  - role: add-rpmbuilder-user
+ 
+  ## Web-Server Setup
+  # mount-efs Role moved to relevant playbook: not all yumRepo-server uses will use EFS or be in AWS.
+  # NFS isn't supported for creating sqlite DBs. createrepo is using sqlite so EFS isn't an option any longer; 
+  #  Instead using normal AWS Volume, setup with LVM and xfs.
+  #-------
+  - role: nginx-server 
+

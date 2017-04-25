@@ -1,0 +1,57 @@
+---
+#- name: Setup os_type
+#  include_vars: "{{ ansible_distribution }}.yml"
+#  when: not ansible_distribution == 'Red Hat Enterprise Linux'
+
+#- name: Setup os_type for RHEL
+#  include_vars: "CentOS.yml"
+#  when: ansible_distribution == 'Red Hat Enterprise Linux'
+
+- name: Setup os_version
+  include_vars: "osVersion.yml"
+
+- name: Add repository file
+  copy:
+    src: repo-aam-local.repo
+    dest: /etc/yum.repos.d/repo-aam-local.repo
+    owner: root
+    group: root
+    mode: 0644
+  when: ansible_distribution == 'CentOS'
+
+- name:  Add CentOS GPG key
+  copy:
+    src: RPM-GPG-KEY-CentOS-{{ os_version }}
+    dest: /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-{{ os_version }}
+    owner: root
+    group: root
+    mode: 0644
+  when: ansible_distribution == 'CentOS'
+
+- name: Import EPEL GPG key
+  copy:
+    src: RPM-GPG-KEY-EPEL-{{ os_version }}
+    dest: /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-{{ os_version }}
+    owner: root
+    group: root
+    mode: 0644
+  when: ansible_distribution == 'CentOS'
+
+- name: Import AAM GPG key
+  copy:
+    src: RPM-GPG-KEY-aam
+    dest: /etc/pki/rpm-gpg/RPM-GPG-KEY-aam
+    owner: root
+    group: root
+    mode: 0644
+  when: ansible_distribution == 'CentOS'
+
+- name: stat artsalliancemedia repo file
+  stat: path=/etc/yum.repos.d/artsalliancemedia.repo
+  register: arts_stat
+
+- name: Rename artsalliancemedia.repo if exist 
+  command: mv /etc/yum.repos.d/artsalliancemedia.repo /etc/yum.repos.d/artsalliancemedia.disabled
+  when: arts_stat.stat.exists
+
+

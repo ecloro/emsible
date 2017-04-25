@@ -1,0 +1,83 @@
+#---------------------------------------
+# CentOS/EPEL yum Repositories (Hosted)
+#---------------------------------------
+
+[aam-os-base]
+name=CentOS-$releasever - Base
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-$releasever
+enabled=1
+baseurl=http://repo.aam.local/centos-base/$releasever/$basearch/
+humanname=CentOS-$releasever - Base
+
+[aam-os-extras]
+name=CentOS-$releasever - Extras
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-$releasever
+enabled=1
+baseurl=http://repo.aam.local/centos-extras/$releasever/$basearch/
+humanname=CentOS-$releasever - Extras
+
+[aam-os-updates]
+name=CentOS-$releasever - Updates
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-$releasever
+enabled=1
+baseurl=http://repo.aam.local/centos-updates/$releasever/$basearch/
+humanname=CentOS-$releasever - Updates
+
+[aam-epel]
+name=CentOS-$releasever - EPEL
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-$releasever
+enabled=1
+baseurl=http://repo.aam.local/epel/$releasever/$basearch/
+humanname=EPEL-$releasever
+
+
+#-------------------------------
+# AAM Software yum Repositories
+#-------------------------------
+
+[aam]
+name=Arts Alliance Media Managed Custom Repository
+baseurl=http://repo.aam.local/aam/$basearch/
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-aam
+enabled=1
+
+[aam-extras]
+name=Arts Alliance Media Managed Custom Repository - Extras
+baseurl=http://repo.aam.local/aam-extras/$basearch/
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-aam
+enabled=1
+
+[aam-test]
+name=Arts Alliance Media Managed Custom Test Repository
+baseurl=http://repo.aam.local/aam-test/$basearch/
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-aam
+enabled=1
+
+[aam-beta]
+name=Arts Alliance Media Managed Custom Screenwriter-Beta Repository
+baseurl=http://repo.aam.local/aam-beta/$basearch/
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-aam
+enabled=1
+
+[aam-dev]
+name=Arts Alliance Media Managed Custom rpmbuild-dev Repository
+baseurl=http://repo.aam.local/aam-dev/$basearch/
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-aam
+enabled=0
+
+[aam-assist]
+name=Arts Alliance Media Managed Custom Assistant Repository
+baseurl=http://repo.aam.local/aam-assist/$basearch/
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-aam
+enabled=0
+

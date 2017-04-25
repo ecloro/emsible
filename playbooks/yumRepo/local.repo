@@ -1,0 +1,4 @@
+[local-noarch]
+name=Local Repo - noarch
+enabled=0
+baseurl=file:///www/repo/rpmbuild/noarch

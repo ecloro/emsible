@@ -1,0 +1,30 @@
+---
+- name: Add repository file _CentOS
+  copy:
+    src: {{ ansible_distribution }}{{ ansible_distribution_major_version }}_docker-rpm-builder-v1.repo
+    dest: /etc/yum.repos.d/docker-rpm-builder-v1.repo
+    owner: root
+    group: root
+    mode: 0644
+  when: ansible_distribution == 'CentOS'
+
+- name: Add repository file _Fedora
+  copy:
+    src: {{ ansible_distribution }}_docker-rpm-builder-v1.repo
+    dest: /etc/yum.repos.d/docker-rpm-builder-v1.repo
+    owner: root
+    group: root
+    mode: 0644
+  when: ansible_distribution == 'Fedora'
+
+- name: install Docker _CentOS
+  yum: name=docker-engine state=present update_cache=yes
+  when: ansible_distribution == 'CentOS' and ansible_distribution_major_version == '7'
+
+- name: install Docker _Fedora
+  yum: name=docker state=present update_cache=yes
+  when: ansible_distribution == 'Fedora' and ansible_distribution_major_version >= '24'
+
+- name: install docker-rpm-builder
+  yum: name=docker-rpm-builder state=present update_cache=yes 
+

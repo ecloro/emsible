@@ -1,0 +1,8 @@
+customer: saltssh_victim
+environment: ndo
+influxdb-auth: true
+location: aws-eu-west-1a
+node_type: aws
+release: n/a
+role: ndo
+zabbix_proxy: 172.31.1.22

@@ -1,0 +1,28 @@
+- hosts: localhost
+  vars:
+    iptables_filter_rules:
+      - chain: input
+        protocol: tcp
+        source_address: 0.0.0.0/0
+        destination_port: 22
+        comment: ssh access
+        target: accept
+      - chain: input
+        protocol: tcp
+        source_address: repo.aam.local
+        destination_port: 443
+        comment: yum repository/web-server access
+        target: accept
+      - chain: input
+        protocol: tcp
+        source_address: repo.aam.local
+        destination_port: 80
+        comment: yum repository/web-server access
+        target: accept
+      - chain: input
+        protocol: tcp
+        source_address: lgt2-db.aam.local
+        comment: lgt2-db full access
+        target: accept
+  roles:
+    - iptables-full

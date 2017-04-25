@@ -1,0 +1,56 @@
+---
+# tasks file for zabbix-agent (CentOS specific)
+
+- name: Install zabbix and zabbix-agent
+  yum: name={{ item }} state=present update_cache=yes
+  with_items:
+   - zabbix22
+   - zabbix22-agent
+  tags: zabbix-agent
+
+- name: Set zabbix_agentd instance hostname
+  replace: dest=/etc/zabbix/zabbix_agentd.conf regexp="Hostname=Zabbix server" replace="Hostname={{ inventory_hostname }}" backup=no
+  tags: zabbix-agent
+  notify:
+    - restart zabbix-agent
+
+- name: Set zabbix_agentd instance server
+  replace: dest=/etc/zabbix/zabbix_agentd.conf regexp="Server=127.0.0.1" replace="Server={{ zabbix_proxy }}{{ zabbix_master }}" backup=no
+  tags: zabbix-agent
+  notify:
+    - restart zabbix-agent
+
+- name: Set zabbix_agentd instance active server
+  replace: dest=/etc/zabbix/zabbix_agentd.conf regexp="ServerActive=127.0.0.1" replace="Server={{ zabbix_proxy }}" backup=no
+  tags: zabbix-agent
+  notify:
+    - restart zabbix-agent
+
+- name: Create symlink for agent config
+  file: src=/etc/zabbix/zabbix_agentd.conf dest=/etc/zabbix_agentd.conf state=link force=yes
+  notify:
+    - restart zabbix-agent
+
+- name: Create zabbix group
+  group: name=zabbix state=present
+  tags: zabbix-agent
+  notify:
+    - restart zabbix-agent
+
+- name: Create zabbix user
+  user: name=zabbix shell=/bin/bash group=zabbix home=/var/lib/zabbix password="$1$xyz$vjHWQCaHpE20cj4E3H.SR/"
+  tags: zabbix-agent
+
+- name: add sshd_config entry for zabbix user
+  blockinfile:
+    insertafter: EOF
+    dest: /etc/ssh/sshd_config
+    block: |
+      Match User zabbix
+      PasswordAuthentication yes
+  notify:
+    - restart sshd
+
+- name: Start zabbix-agent service
+  service: name=zabbix-agent enabled=yes state=started
+  tags: zabbix-agent

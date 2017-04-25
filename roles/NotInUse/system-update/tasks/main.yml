@@ -1,0 +1,11 @@
+---
+- name: Update all packages to latest version
+  package: name=* state=latest
+  tags:
+    - common
+    - update
+    - security
+  notify:
+    - Restart Machine
+    - Wait for Restart
+

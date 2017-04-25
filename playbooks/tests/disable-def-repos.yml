@@ -1,0 +1,6 @@
+---
+- name: Test disable Repos role 
+  hosts: localhost
+  roles:
+    - { role: disable-defualt-repos, disable_repos: "all" }
+

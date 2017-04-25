@@ -1,0 +1,14 @@
+---
+- name: Setup lgt2 DB
+
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "../vars/lgt2db_iptables_vars.yml"
+    - "../vars/lgt2db_postgresql_vars.yml"
+
+  roles:
+    - role: add-lgt2-user
+    - role: iptables-full
+    - role: etc-hosts
+    - role: postgresql
+

@@ -1,0 +1,4 @@
+---
+dependencies:
+  - { role: 'install-git', when: ansible_os_family == 'RedHat' }
+

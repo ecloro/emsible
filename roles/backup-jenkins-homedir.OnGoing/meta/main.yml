@@ -1,0 +1,12 @@
+---
+dependencies:
+  #- install-epel-scl-repos
+  #- clean-directory
+  #  aged:
+  #    path: "/tmp"
+  #    user: root
+  #    days: 30
+  #  #tags:
+  #  #  - cron
+  - { role: 'install-epel-scl-repos' }
+  - { role: 'clean-directory.OnGoing', aged.path: '/tmp', aged.user: root, aged.days: 2 }

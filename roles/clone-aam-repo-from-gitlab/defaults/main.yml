@@ -1,0 +1,12 @@
+---
+localUser: root        ### Change user: Setup var in playbook (see rpmbuilder example in playbooks/)
+homeDir: /home/{{ localUser }}
+sshDir: '{{ homeDir }}/.ssh'
+downloadDir: '{{ homeDir }}/tmp'
+#
+#repoName:             ### Setup in playbook/Vars; for changable, run playbook with --extra-vars (see rpmbuild example)
+#
+gitLabServer: gitlab-int.notdevops.com
+gitLabCompany: ndo
+gitUser: rpmbuild
+#gitTag:        ## tag/release

@@ -1,0 +1,22 @@
+[cinesand_scw]
+172.31.1.201 ansible-host=172.31.1.201
+
+[cinesand_old]
+172.31.1.213 ansible-host=172.31.1.213
+172.31.1.214 ansible-host=172.31.1.214
+172.31.1.215 ansible-host=172.31.1.215
+ 
+[cinesand_adf]
+172.31.1.212 ansible-host=172.31.1.212
+ 
+[cinesand_prod]
+172.31.1.212 ansible-host=172.31.1.212
+
+[cinesand_etms:children]
+cinesand_prod
+
+[cinesand_all:children]
+cinesand_etms
+cinesand_adf
+cinesand_scw
+cinesand_old

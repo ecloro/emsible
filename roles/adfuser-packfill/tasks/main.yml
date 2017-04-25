@@ -1,0 +1,16 @@
+---
+- name: Install Dependent Repostories
+  yum: name={{ additional_repos }} state=installed
+
+- name: Log Start of Adfuser Packfill RPM Dependencies Install
+  shell: echo -e "\n\n{{ PKFLrpmName }} Dependency Installation ($(date))\n" >> {{ rpmLogFile }} 2>&1
+
+- name: Install Adfuser Packfill RPM Dependencies
+  yum: name={{ packfill_deps }} enablerepo={{ from_repo }} state=installed
+
+- name: Log Start of Adfuser Packfill RPM Install
+  shell: echo -e "\n\n{{ PKFLrpmName }} Installation ($(date))\n" >> {{ rpmLogFile }} 2>&1
+
+- name: Install Adfuser Packfill RPM
+  yum: name={{ PKFLrpmName }}-0:{{ rpm_ver }}.el6.x86_64 enablerepo={{ from_repo }} state=installed
+  notify: restart adf-packfill

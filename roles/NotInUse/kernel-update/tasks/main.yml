@@ -1,0 +1,7 @@
+---
+- name: Update all packages to latest version
+  package: name=kernel* state=latest
+  notify:
+    - Restart Machine
+    - Wait for Restart
+

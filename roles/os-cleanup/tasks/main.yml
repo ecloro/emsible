@@ -1,0 +1,12 @@
+---
+- fail: msg='OS not suported'
+  when: ansible_os_family != 'RedHat'
+
+- name: Disable Unwanted Services 
+  service:
+    name='{{ item.name }}'
+    state='{{ item.state }}'
+    enabled='{{ item.enabled }}'
+  with_items: '{{ service_list }}'
+  ignore_errors: yes
+

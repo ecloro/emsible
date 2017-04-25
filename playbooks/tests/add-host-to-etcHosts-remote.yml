@@ -1,0 +1,20 @@
+---
+- name: test add-host-to-inventory
+  hosts: "{{ remoteHost }}"
+  become: yes
+  become_user: root
+  vars:
+    remoteUpdate: true
+    add_hosts:
+      - ip: 172.28.17.40
+        name: yumRepo-server
+  roles:
+    - role: add-host-to-etcHosts
+    #- { role: 'add-host-to-etcHosts', add_hosts.ip="172.28.17.40", add_hosts.name="yumRepo-server" }
+
+- name: test added host
+  hosts: yumRepo-server
+  gather_facts: no
+  tasks:
+    - name: ping all hosts
+      ping:

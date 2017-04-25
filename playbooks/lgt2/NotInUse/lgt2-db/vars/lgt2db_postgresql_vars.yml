@@ -1,0 +1,12 @@
+---
+## LGT2
+#lgt2-app: "{{ lookup('pipe', 'host lgt2-app.aam.local | awk '{print $4}'')}"
+lgt2_app: lgt2-app.aam.local
+#
+postgresql_version: 9.5
+#
+# pg_hba.conf
+postgresql_pg_hba_custom:
+  #- { type: host, database: all, user: all, address: "10.20.30.4/32", method: 'md5', comment: 'LGT2 setup' }
+  - { type: host, database: all, user: all, address: "{{ lgt2_app }}", method: 'md5', comment: 'LGT2 setup' }
+  #- { type: host,  database: all, user: all, address: '0.0.0.0/0', method: '{{ postgresql_default_auth_method }}', comment: 'IPv4 local connections:' }

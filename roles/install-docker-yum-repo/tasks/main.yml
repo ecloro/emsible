@@ -1,0 +1,23 @@
+---
+- name: Setup os_type
+  include_vars: "{{ ansible_distribution }}.yml"
+  when: not ansible_distribution == 'Red Hat Enterprise Linux'
+
+- name: Setup os_type for RHEL
+  include_vars: "CentOS.yml"
+  when: ansible_distribution == 'Red Hat Enterprise Linux'
+
+- name: Setup os_version
+  include_vars: "osVersion.yml"
+
+- name: Add repository file
+  template:
+    src: docker.repo.j2
+    dest: /etc/yum.repos.d/docker.repo
+  when: ansible_os_family == 'RedHat'
+
+- name: Import GPG key
+  rpm_key: state=present key=https://yum.dockerproject.org/gpg
+  when: ansible_os_family == 'RedHat'
+
+

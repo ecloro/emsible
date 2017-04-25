@@ -1,0 +1,72 @@
+#!/usr/bin/env ansible-playbook
+#
+#- hosts: "{{ remoteHost }}"  ### RUN: --extra-vars "remoteHost=HOSTNAME,id=/PATH/FILE"
+
+- name: Salt - Backup Jenkins Configuration and jobs to Git Repository
+  hosts: localhost
+  user: root
+
+  ## VARs
+  vars:
+    jenkinsHome: /var/lib/jenkins 
+    miscRepo: misc
+    saltRepo: salt-states
+    gitUser: rpmbuild
+    gitUserEmail: rpmbuild@notdevops.com
+    localRepoDir: /tmp
+    gitLabServer: gitlab-int.notdevops.com
+    gitLabGroup: ndo
+    sshDir: /root/.ssh
+    keys_dir: "keys"
+    sshId: ndo-prod
+    sshKeyB: rpmbuild
+    scripts_dir: "scripts"
+    backupScript: "{{ scripts_dir }}/jenkins-salt-backup.sh"
+
+  tasks:
+
+  - name: Install pre-requirements
+    yum: name={{ item }} state=installed
+    with_items:
+     - git
+     - libselinux-python
+
+  - name: Create .ssh directory (if doesn't exist)
+    file: path={{ sshDir }} state=directory mode=0700
+
+  - name: Copy the sshKey file - prod 
+    copy: src={{ keys_dir }}/{{ sshId }} dest={{ sshDir }}/{{ sshId }} owner=root group=root mode=0600
+
+  - name: Copy the sshKey file - sshKeyB
+    copy: src={{ keys_dir }}/{{ sshKeyB }} dest={{ sshDir }}/{{ sshKeyB }} owner=root group=root mode=0600
+ 
+  - name: setup git - user
+    shell: "git config --global user.name {{ gitUser }}"
+
+  - name: setup git - email
+    shell: "git config --global user.email {{ gitUserEmail }}"
+
+  - name: ensure gitlab is a known host
+    lineinfile:
+      dest: "{{ sshDir }}/known_hosts"
+      create: yes
+      state: present
+      line: "{{ lookup('pipe', 'ssh-keyscan -t rsa gitlab-int.notdevops.com') }}"
+      regexp: "^gitlab\\.com"
+
+  - name: Download misc Repository
+    git: repo=git@{{ gitLabServer }}:{{ gitLabGroup }}/{{ miscRepo }}.git
+         dest={{ localRepoDir }}/{{ miscRepo }}
+         recursive=yes
+
+  - name: Download salt-states Repository
+    git: repo=git@{{ gitLabServer }}:{{ gitLabGroup }}/{{ saltRepo }}.git
+         dest={{ localRepoDir }}/{{ saltRepo }}
+         recursive=yes
+
+  - name: Run the backup script
+    script: "{{ backupScript }} {{ localRepoDir }} {{ sshDir }}/{{ sshId }}"
+    register: backupScript_out
+  - debug: var=backupScript_out.stdout_lines
+
+

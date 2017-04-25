@@ -1,0 +1,24 @@
+---
+- name: Download AAM git Repo
+  hosts: localhost
+  #-------
+  #- Tested inside a container
+  #- BELOW Example is part of rpmbuild-server container
+  #- aam-producer RPM Repo from gitLab:
+  # ansible-playbook --extra-vars "repoName=rpm_aam-producer gitSource=gitlab" download_rpm_gitRepo.yml
+  #- producer (circuit) Repo from gitHub: 
+  # ansible-playbook --extra-vars "repoName=circuit gitSource=github" download_rpm_gitRepo.yml
+  #---
+  #- NOTE: Pleaybook will fail if Repository is empty.
+  #-------
+  vars:
+    localUser: rpmbuilder
+  roles:
+    - { role: 'clone-aam-repo-from-github', when: gitSource == 'github' }
+    - { role: 'clone-aam-repo-from-gitlab', when: gitSource == 'gitlab' }
+  #-------
+  tasks:
+    - fail: msg="_ERROR_ Can't run - missing 'repoName' and 'gitSource'."
+      when: repoName is not defined or gitSource is not defined
+    - debug: msg="Repository {{ repoName }} from {{ gitSource }} is successfully cloned in {{ downloadDir}}."
+

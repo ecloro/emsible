@@ -1,0 +1,1 @@
+ssh-keygen -t rsa -b 2048 -C "lgt2@localhost" -f authorized_keys.lgt2

@@ -1,0 +1,20 @@
+[local-noarch]
+name=Local Repo - noarch
+enabled=0
+baseurl=file:///www/repo/rpmbuild/noarch
+
+[local-64]
+name=Local Repo - x86_64
+enabled=0
+baseurl=file:///www/repo/rpmbuild/x86_64
+
+[local-32]
+name=Local Repo - i386/i686
+enabled=0
+baseurl=file:///www/repo/rpmbuild/i386
+
+[local-src]
+name=Local Repo - SRC
+enabled=0
+baseurl=file:///www/repo/rpmbuild/src
+

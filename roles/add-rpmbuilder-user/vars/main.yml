@@ -1,0 +1,5 @@
+---
+ssh_users:
+  - name: rpmbuilder
+    comment: rpmbuilder-user
+    key: "{{ lookup('file', 'authorized_keys.rpmbuilder.pub') }}"

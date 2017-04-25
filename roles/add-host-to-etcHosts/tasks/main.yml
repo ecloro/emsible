@@ -1,0 +1,22 @@
+---
+- name: Install preReq packages
+  package:
+    name: '{{ item.name }}'
+    state: '{{ item.state }}'
+  with_items: '{{ preReq_pkgs }}'
+
+- name: Add host to Local /etc/hosts
+  delegate_to: localhost
+  lineinfile:
+    dest: /etc/hosts
+    line: "{{ item.ip }} {{ item.name }}"
+  with_items: '{{ add_hosts }}'
+  when: localUpdate
+
+- name: Add host to Remote /etc/hosts
+  lineinfile:
+    dest: /etc/hosts
+    line: "{{ item.ip }} {{ item.name }}"
+  with_items: '{{ add_hosts }}'
+  when: remoteUpdate
+

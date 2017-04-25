@@ -1,0 +1,35 @@
+#!/usr/bin/env ansible-playbook
+#
+- hosts: "{{ remoteHost }}"  ### RUN: --extra-vars "remoteHost=Remote_HOSTNAME" or use the relevant group
+  tasks:
+  - group_by: key=os_{{ ansible_distribution }}
+
+- name: Install Minimum Pkgs
+  hosts: os_CentOS
+  gather_facts: False
+  tasks:
+    yum: name={{ item }} state=present update_cache=yes
+    with_items:
+    - yum-utils
+    - which
+    - man
+    - telnet
+    - curl
+    - wget
+    - sysstat
+    - vim
+    - vim-enhanced
+    - vim-common
+    - lsof
+    - bind-utils
+    - parted
+    - tmpwatch
+    - lftp
+    - ncftp
+    - ftp
+    - ntp
+    - openssh-clients
+    - nc
+    - cifs-utils
+    - mailx
+

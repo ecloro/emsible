@@ -1,0 +1,7 @@
+---
+dependencies: [] 
+  ## Add repo.aam.local to /etc/hosts
+  #- { role: 'add-host-to-etcHosts', add_hosts.ip: 172.30.14.33, add_hosts.name: repo.aam.local }
+
+
+  #- { role: disable-defualt-repos }

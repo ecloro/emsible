@@ -1,0 +1,21 @@
+#!/usr/bin/env ansible-playbook
+
+- hosts: "{{ remoteHost }}"  ### RUN: --extra-vars "remoteHost=Remote_HOSTNAME" or use the relevant group
+  tasks:
+  - group_by: key=os_{{ ansible_distribution }}
+
+- name: Update Repository Server on AWS/stglab (Aug2016)
+
+  hosts: os_CentOS
+  gather_facts: False
+
+  tasks:
+  - name: Update hosts file - remove old entry
+    #lineinfile: dest=/etc/hosts state=absent regexp="^10\.20\.254\.78"
+    lineinfile: dest=/etc/hosts state=absent regexp='puppet\.artsalliancemedia\.com'
+
+  - name: Update hosts file - Add new entry
+    lineinfile: dest=/etc/hosts state=present line="172.30.14.200    aam-repo-1.aam.local    aam-repo-1"
+
+  - name: Update arts repo file
+    replace: dest=/etc/yum.repos.d/artsalliancemedia.repo regexp="puppet.artsalliancemedia.com" replace="aam-repo-1.aam.local"

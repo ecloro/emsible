@@ -1,0 +1,62 @@
+#!/usr/bin/env ansible-playbook
+#
+
+- hosts: "{{ remoteHost }}"  ### RUN: --extra-vars "remoteHost=Remote_HOSTNAME" or use the relevant group
+  #tasks:
+  #- group_by: key=os_{{ ansible_distribution }}
+
+  user: root
+  
+  ## VARs
+  vars: 
+    scripts_dir: "/home/lilly/AAM/local.env/Ansible/stglab-playbooks/scripts"
+    postInst_centos: "{{ scripts_dir }}/stglab-postInst-centos"
+    postInst_fedora: "{{ scripts_dir }}/stglab-postInst-fedora"
+    postInst_awsLin: "{{ scripts_dir }}/stglab-postInst-awsLin"
+  
+  tasks:
+
+  #- debug: msg="scripts_dir is {{ scripts_dir }} ."
+  #- debug: msg="postInst_centos script is {{ postInst_centos }} ."
+  #- debug: msg="The host we're running on is {{ host_cmd }} ."
+
+  - name: Run Post-Installation script (CentOS)
+    script: "{{ postInst_centos }} {{ remoteHost }}"
+    when: ansible_distribution == "CentOS"
+    register: postInst_out
+  - debug: var=postInst_out.stdout_lines
+    when: ansible_distribution == "CentOS"
+ 
+  - name: Run Post-Installation script (Fedora)
+    script: "{{ postInst_fedora }} {{ remoteHost }}"
+    when: ansible_distribution == "Fedora"
+    register: postInst_out
+  - debug: var=postInst_out.stdout_lines
+    when: ansible_distribution == "Fedora"
+
+  #- name: Run Post-Installation script (Fedora)
+  #  script: "{{ postInst_fedora }} {{ host_cmd }}"
+  #  when: ansible_distribution == "?" ## I don't know which string to use..
+  #  register: postInst_out
+  #- debug: var=postInst_out.stdout_lines
+  #  when: ansible_distribution == "?" ## I don't know which string to use..
+
+  # Reboot the server if kernel was updated
+  ## from: https://codepoets.co.uk/2014/ansible-random-things/
+  - name: Check if reboot is required after a kernel update.
+    shell: if [ $(rpm -q --last kernel|head -1|awk '{print $1}'|sed 's/^kernel-//') != $(uname -r) ]; then echo 'reboot'; else echo 'no'; fi
+    ignore_errors: true
+    register: reboot_hint
+
+  - name: Rebooting ...
+    command: shutdown -r now "Ansible kernel update applied"
+    async: 0
+    poll: 0
+    ignore_errors: true
+    when: reboot_hint.stdout.find("reboot") != -1
+    register: rebooting
+
+  - name: Wait for the Server to reboot...
+    pause: seconds=47
+    when: rebooting|changed
+

@@ -1,0 +1,25 @@
+- name: Install yum Repository Server - AAM repos
+  hosts: "{{ remoteHost }}" ### -e "remoteHost=HOSTNAME"
+  #-------
+  vars:
+    ## Role: yumRepo-server
+    repoDir: "/opt/www/repo"
+    repoName: aam
+    ## TODO: yumRepo-server -> add support for multiple repos
+
+    ## Role: mount-efs
+    #aws_efs_paths:
+    #  - { path: "/efs", owner: "root", group: "root", mode: "0644", region: "eu-west-1", filesystem_id: "fs-58b17591"}
+  
+  #-------
+  roles:
+    - { role: install-epel-scl-repos }
+    - { role: 'yumRepo-server', when: ansible_os_family == 'RedHat' }
+  #-------
+  #tasks:
+    #- fail: msg="ERROR: Can't run - missing 'repoName' and 'gitSource'."
+    #when: repoName is not defined or gitSource is not defined
+    ### when: deployed_revision is not defined or deployed_revision.stdout is not defined or deployed_revision.stdout == ''
+    ### when: item.sudo is defined and item.sudo == true
+
+

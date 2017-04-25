@@ -1,0 +1,7 @@
+---
+- name: test Add rpm to yum Repo
+  hosts: "{{ remoteHost }}" 
+  # -e "remoteHost=SERVER rpmFile=rpmFileName.rpm"
+  roles:
+    - { role: add-rpm-to-yum-repo, rpmPath: "/home/libelo/tmp/rpmbuild", rpmArch: "noarch", repoDir: "/www/repo/rpmbuild" }
+

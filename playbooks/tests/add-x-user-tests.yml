@@ -1,0 +1,7 @@
+---
+- name: Add user X tests
+  hosts: "{{ remoteHost }}"     # -e "remoteHost=SERVER"
+  roles:
+    - role: add-lgt2-user
+    - role: add-rpmbuilder-user
+

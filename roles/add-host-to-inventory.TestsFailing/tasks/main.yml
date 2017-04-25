@@ -1,0 +1,16 @@
+---
+#- name: Add host to current inventory
+#  local_action: "add_host hostname={{ host_IP }} ansible_host={{ host_Hostname }} ansible_port={{ host_Port }}"
+
+#- name: add them to myvms_new group
+#  local_action: add_host hostname=$item groupname=myvms_new
+#  with_items: ${hosts_list}
+# 
+- name: add list of hosts to current inventory
+  local_action: add_host 
+    hostname='{{ host.ip }}'
+    ansible_host='{{ host.name }}'
+    ansible_port='{{ host.port }}'
+    groupname='{{ host.group }}'
+  with_items: '{{ add_hosts }}'
+

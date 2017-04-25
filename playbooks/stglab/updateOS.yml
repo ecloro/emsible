@@ -1,0 +1,12 @@
+#!/usr/bin/env ansible-playbook
+- hosts: "{{ remoteHost }}"  ### RUN: --extra-vars "remoteHost=Remote_HOSTNAME" or use the relevant group
+  tasks:
+  - group_by: key=os_{{ ansible_distribution }}
+
+- name: Update OS to latest
+  hosts: os_CentOS
+  gather_facts: False
+  tasks:
+  - name: Update OS
+    yum: name="*" disablerepo="aam-*" exclude="salt*,jenkins,docker*" update_cache=yes
+

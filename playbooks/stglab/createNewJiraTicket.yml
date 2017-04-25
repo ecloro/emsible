@@ -1,0 +1,48 @@
+#!/usr/bin/env ansible-playbook
+
+#
+# RUN: --extra-vars "pass=whatEver"
+#
+
+- hosts: localhost
+
+## VARs
+  vars: 
+    server: "https://artsalliancemedia.atlassian.net"
+    user: "lilly.ibelo"
+    #pass: ### pass in extra-vars/CMD
+    project: "NDO"
+
+  tasks:  
+
+# !!! not working..
+# fatal: [localhost]: FAILED! => {"changed": false, "failed": true, 
+# "msg": "dictionary update sequence element #0 has length 1; 2 is required"}
+
+#  - name: Create an assigned issue in Jira  
+#    jira: uri={{server}} username={{user}} password={{pass}}
+#          project={{project}} operation=create summary="Ansible Tests" 
+#          description="Created and assigned using Ansible" 
+#          issuetype=Task
+    
+#  - name: Create another
+#    jira: assignee=lilly.ibelo comment="Ansible test complete" 
+#          description="Created and assigned using Ansible" issuetype=Task 
+#          operation=create password={{pass}} project=NDO summary="Ansible Tests" 
+#          uri={{server}} username={{user}}
+
+   - name: Create new issue
+     jira: 
+        uri: "https://artsalliancemedia.atlassian.net"
+        username: lilly.ibelo
+        password: "{{ pass }}"
+        project: NDO
+        operation: create
+        summary: "Test Issue"
+        description: "Created using Ansible"
+        issuetype: Task
+
+
+
+
+

@@ -1,0 +1,78 @@
+#!/usr/bin/env ansible-playbook
+#- hosts: "{{ variable_host | default('localhost') }}"
+- hosts: "{{ remoteHost }}"  ### RUN: --extra-vars "remoteHost=HOSTNAME"
+  tasks:
+     - group_by: key=os_{{ ansible_distribution }}
+
+- name: Install aam-producer 
+
+  # talk to all hosts just so we can group them into OS-groups
+  hosts: os_CentOS
+  gather_facts: False
+  #
+  user: root
+
+  ## VARs
+  vars: 
+    rpmName: aam-producer
+    standAlone: aam-producer-standalone
+    configFile: /etc/etms/circuit_services.cfg
+    rpmLogFile: /var/log/{{ rpmName }}_ansible.log
+
+  tasks:
+
+  ## PreReq: Additional Repositories
+  - name: EPEL
+    yum: name=epel-release state=installed
+  - name: SCL
+    yum: name=centos-release-scl state=installed
+
+  ## Install aam-producer
+  - name: Install aam-producer Dependencies
+    yum: name={{ item }} state=present update_cache=yes  # for some reason, Installation is skipping RPM dependencies.
+    with_items:
+     - python
+     - python-pip 
+     - python-devel
+     - postgresql-devel
+     - libffi-devel
+     - openssl-devel
+     - libevent-devel
+     - python-setuptools-devel
+     - python-dmidecode 
+     - gcc
+     - which
+     - python-imaging
+
+  - name: Add header to LogFile
+    shell: echo -e "\n\n{{ rpmName }} Installation ($(date))\n" >> {{ rpmLogFile }} 2>&1
+ 
+  - name: Install StandAlone RPM
+    yum: name={{ standAlone }} disablerepo=aam-dev state=installed
+    
+  - name: Install RPM
+    yum: name={{ rpmName }} disablerepo=aam-dev state=installed 
+
+  - name: Run DB script
+    shell: cd /etc/etms ; /bin/bash prod-pgsql-db-setup --access local >> {{ rpmLogFile }} 2>&1
+
+  - name: Add License
+    shell: sed -i '/\[app\]/a license = 78F79-31325-A606B-1AB7B-BFB36-CD89F' {{ configFile }} >> {{ rpmLogFile }} 2>&1
+ 
+  - name: InitDB
+    #shell: /sbin/service etms initdb  ## (?) how to pass "y" to the command
+    shell: /usr/bin/CircuitServicesManager.py --config {{ configFile }} --initdb >> {{ rpmLogFile }} 2>&1
+
+  - name: Start etms service
+    #service: name=etms state=started   ## Not working..
+    shell: /sbin/service etms start >> {{ rpmLogFile }} 2>&1
+
+  - name: Update config file to accept EULA
+    shell: sed -i '/eula_accepted/c\eula_accepted = True' {{ configFile }} >> {{ rpmLogFile }} 2>&1
+
+  - name: status etms (for logfile)
+    shell: /sbin/service etms status >> {{ rpmLogFile }} 2>&1
+
+  - name: Restart etms service to apply changes
+    shell: /sbin/service etms restart >> {{ rpmLogFile }} 2>&1
+

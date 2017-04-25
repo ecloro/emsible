@@ -1,0 +1,7 @@
+---
+- name: test os update
+  hosts: "{{ remoteHost }}"
+  roles:
+    #- { role: os-update }
+    - { role: os-update, system_update_restart: "true" }
+

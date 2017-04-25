@@ -1,0 +1,9 @@
+---
+required_repos:
+  - name: epel-release
+    state: latest
+  - name:  centos-release-scl-rh
+    state: latest
+  - name: centos-release-scl
+    state: latest
+

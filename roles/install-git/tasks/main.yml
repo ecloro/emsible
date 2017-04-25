@@ -1,0 +1,11 @@
+---
+- name: Install git
+  become: yes
+  yum: name=git state=installed
+  when: ansible_os_family == "RedHat"
+
+- name: libselinux-python depondency
+  become: yes
+  yum:  name=libselinux-python state=installed
+  when: ansible_os_family == "RedHat"
+                       

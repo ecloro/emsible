@@ -1,0 +1,4 @@
+---
+ansible_user: root
+zabbix_proxy: 172.31.49.229,172.30.6.111
+private_key_file: ~/.ssh/id_rsa

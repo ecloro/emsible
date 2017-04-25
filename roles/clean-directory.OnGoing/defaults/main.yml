@@ -1,0 +1,5 @@
+---
+aged:
+  - path: '/tmp'
+    days: 60
+    user: 'jenkins'

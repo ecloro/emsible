@@ -1,0 +1,8 @@
+---
+# vars file for producer
+vars:
+  rpmName: aam-producer
+  standAlone: aam-producer-standalone
+  rpmLogFile: /var/log/{{ rpmName }}_ansible.log
+
+

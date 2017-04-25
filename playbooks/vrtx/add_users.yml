@@ -1,0 +1,16 @@
+#!/usr/bin/env ansible-playbook
+- name: Add Users to LGT/OTRS servers in VRTX
+  #hosts: vrtx-lgt
+  hosts: "{{ remoteHost }}"  ### RUN: --extra-vars "remoteHost=Remote_HOSTNAME" or use the relevant group
+  user: root
+  vars: 
+    # python -c 'import crypt; print crypt.crypt("This is my Password", "$1$SomeSalt$")'
+    #password: $1$SomeSalt$/KG474pwwdnwMnmA3IyjV1
+    password: $1$SomeSalt$QZ5stl1HwWREkjau1fey50  ### Pas$w0rd123
+  tasks:
+    - name: Add user 1
+      user: name=gokhan password={{password}} comment="Gokhan Ipek" shell=/bin/bash groups=wheel append=yes 
+   
+    - name: Add user 2
+      user: name=awad password={{password}} comment="Awad Mackie" shell=/bin/bash groups=wheel append=yes
+

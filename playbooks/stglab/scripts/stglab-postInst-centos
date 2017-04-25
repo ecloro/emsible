@@ -1,0 +1,207 @@
+#!/bin/bash
+
+#
+# On new stglab EC2 instance
+#
+
+yum="yum -y"
+service="/sbin/service"
+#
+replace_setting ()
+{
+# $1: setting ; $2: 0/1
+setting="$1"
+setup="$2"
+#echo "[$(date +%F-%H%M%S)] Update Setting $setting:"
+sed -i '/'"$setting"'/c\'"$setting"' '"$setup"'' $cloud_config
+}
+#
+stop_app ()
+{
+# $ service name
+prod_name="$1"
+if [ ! -z "$prod_name" ]; then
+  $service $prod_name stop
+else echo "ERROR: no service provided - nothing to do."
+fi
+}
+
+###
+
+cloud_init_cfg="/etc/cloud/cloud.cfg"
+#
+if [ -z "$1" ]; then 
+  echo "Usage: $0 Host [Please specify only first hostname; DomainName ndo.aam.local is used by default]" ; exit
+fi
+hostName="${1}.ndo.aam.local" 
+#
+## cloud-init setup
+if [ -e "$cloud_init_cfg" ]; then
+ cloud_init="$(which cloud-init)"
+ cloud_config="/etc/cloud/cloud.cfg"
+ cloud_cache_dir="/var/lib/cloud"
+ #
+ echo "[$(date +%F-%H%M%S)] Update cloud-init:"
+ ## Remove cloud-init cache directory:
+ rm -rf $cloud_cache_dir
+ ## Enable root login
+ replace_setting "disable_root:" "0"
+ ## Stop updating hostname after reboot (remove update_hostname module)
+ sed -i '/update_hostname/d' $cloud_init_cfg
+ ## init
+ echo "[$(date +%F-%H%M%S)] Initialize cloud-init."
+ $cloud_init init
+else
+ echo "[$(date +%F-%H%M%S)] Cloud-init isn't setup"
+fi
+#
+sed -i '/HOSTNAME=/c\HOSTNAME='"$hostName"'' /etc/sysconfig/network
+hostname $hostName
+if which hostnamectl 1>/dev/null 2>&1; then hostnamectl set-hostname $hostName; fi
+#
+echo -n "
+
+alias ll='ls -l --color=auto' 2>/dev/null
+alias l.='ls -d .* --color=auto' 2>/dev/null
+alias ls='ls --color=auto' 2>/dev/null
+alias vi='vim' 2>/dev/null
+
+" >> /root/.bashrc
+#
+bash /root/.bashrc
+#
+cat > /etc/init.d/motd << "EOF"
+#!/bin/sh
+#
+# motd	Prepares /etc/motd file
+#
+# chkconfig: 2345 99 05
+# description: Prepares /etc/motd file
+#
+### BEGIN INIT INFO
+# Provides: motd
+# Required-Start: network
+# Default-Start: 2345
+# Default-Stop: 0 1 6
+# Short-Description: Prepares /etc/motd file
+# Description: Prepares /etc/motd file
+### END INIT INFO
+
+hostName="$(/bin/hostname)"
+ip_address="$(ip addr | grep "inet " | grep -v "127.0.0.1" | cut -d" " -f6 | cut -d/ -f1 | head -1)"
+os="$(cat /etc/redhat-release)"
+arch="$(uname -i)"
+
+echo -e "\nAppliance:\t${os} ${arch}\nHostname:\t${hostName}\nIP Address:\t${ip_address}\n" > /etc/motd
+
+exit 0
+EOF
+#
+chmod +x /etc/init.d/motd
+#
+aam_gpg_key_file="/etc/pki/rpm-gpg/RPM-GPG-KEY-aam"
+arts_repo_file="/etc/yum.repos.d/artsalliancemedia.repo"
+#
+cat > $aam_gpg_key_file << "EOF"
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+Version: GnuPG v1.4.5 (GNU/Linux)
+
+mQGiBFEIIf4RBAD9khILavRyS8t3yesWHnuF9ik+kCERsXomKkdOf0UD34d12KcN
+pW3NZGgISJg88f0JtZ+sWrjXJCkbQbxXFX+bKzXdwvRiiOIn8TFRUhAa8EMXMPbJ
+CLW4UkZ4rbmlBI45uOXCiLw9vH2KhuprePw1vwOvGimv2M9ih9qur2sCBwCgy05o
+vIV/tGqiBpHAxmhFnfayy0kD/3MCDuk8h61LsT/q+Q/yjGlMfeEJBRM3idgJ7K6f
+I78uwtQF7bW2JYm4SsbMyfknYQbAgkuw42qWmNcdMLog/33cTvngk+AL3ZGoswBQ
+B5Zvpe1eVZw2FVlrCHLDM304E7ZO3f7X7qRDXTJ7c97ZNX8KPuNsDI1tF9ZUXqUW
+A1+sBAC1x5K26WVyXPeAM30bLH6t3sZkjYrvnGyXLk6m4yD+7ucZQvG5fAxlh/R/
+pH5789ix5Ur7BGu9fKj1xFanY8KCEw41sd9w+7MRqcarapYzpaXoIu86DLWfV8fy
+bEkpQc4bxEmruF/nAbr8sZfLZQSpL+8vEdwb+6FfFlXeYSFZYrQzQXJ0cyBBbGxp
+YW5jZSBNZWRpYSBMVEQgPHRtc0BhcnRzYWxsaWFuY2VtZWRpYS5jb20+iGAEExEC
+ACAFAlEIIf4CGwMGCwkIBwMCBBUCCAMEFgIDAQIeAQIXgAAKCRCZhpB6cuIJ45GS
+AJ9dEA6Qaew3DNNUaVsOuoSYXf6ToACeJbC/hWPNWp/RY6EPqQEAwrRPG3K5Ag0E
+UQgiBhAIAM/uobbkBsex0iLgs0g7P6VTw76jAPICDugrgWCX74csQgJNHwzjuOif
+E1dCNhsKMgXsJkxY3J3TQRzxWR/hCK7+B9yMP5Dynt/d+9a3REm5n1JFVtH2YWQV
+bI8vk/3X3Iy6Z6FpQpqkn0V9PdKs5s2FY43aT/YyJh1FE0u0VfOOAKnxqtBEsxPJ
+Gx9KQFcMDlfsHC2obWbbE4qDzWmNU7terhtjELmtTcr3Z4H5Z1qy5aeUoIv0xuj5
+x8Ib8P98d4G54a1FMjQ4jooVeMYWehEg/ncm/dJGUZUHNdLotW7lGNN+RJOU1tc1
+2JFytIcIQj4Z6b+LydBiM3Rh8Uuw9+MAAwUH/R+XXFUYfdZ/tFqBIs2W+YIHmYhv
+6f0AY18R/qL0Uyj1skl4G9zuoBjLRA0KlAhgJtEWL4orYf3G6yi67bd38FOTW0Ac
+HyNtEWGhrdr7m7UB91VksqlnBTowIiUmgcSYxplrhvhNzgZev814BLO7jgluqzxs
+RreF7N3LCq+8YYvvF9pjqGxE166ES/454HtrJ/aexXpVtCbiL9wfinqGPbu8P9/F
+Icqnosp6TEjpJTvvf0+4zJQGb/VY08Mgg2yx2Rn2xFrJeLW1JBlnSyFaIXEm+vT4
+P4oCDJn2iXmEdjOr356aNAkEBbRKm5m6CxF6kEu2eG+tEu6QL1HSVLJZRu+ISQQY
+EQIACQUCUQgiBgIbDAAKCRCZhpB6cuIJ4/CsAKCZbeF4oi7HWpkXjjd76nGV//Ba
+bQCeLDETGnE+nToEskjaEbvF6L2A6cI=
+=Fybk
+-----END PGP PUBLIC KEY BLOCK-----
+EOF
+#
+cat > $arts_repo_file << "EOF"
+[aam]
+name=Arts Alliance Media Managed Custom Repository
+baseurl=http://puppet.artsalliancemedia.com/aam/$basearch/
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-aam
+enabled=1
+
+[aam-extras]
+name=Arts Alliance Media Managed Custom Repository - Extras
+baseurl=http://puppet.artsalliancemedia.com/aam-extras/$basearch/
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-aam
+enabled=1
+
+[aam-test]
+name=Arts Alliance Media Managed Custom Test Repository
+baseurl=http://puppet.artsalliancemedia.com/aam-test/$basearch/
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-aam
+enabled=1
+
+[aam-beta]
+name=Arts Alliance Media Managed Custom Beta Repository
+baseurl=http://puppet.artsalliancemedia.com/aam-beta/$basearch/
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-aam
+enabled=1
+
+[aam-dev]
+name=Arts Alliance Media Managed Custom Dev Repository
+baseurl=http://puppet.artsalliancemedia.com/aam-dev/$basearch/
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-aam
+enabled=1
+
+[aam-assist]
+name=Arts Alliance Media Managed Custom Assistant Repository
+baseurl=http://puppet.artsalliancemedia.com/aam-assist/$basearch/
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-aam
+enabled=1
+EOF
+#
+chkconfig --add motd
+bash /etc/init.d/motd
+#
+if ! grep -q puppet /etc/hosts; then echo -e "\n10.20.254.78	puppet.artsalliancemedia.com\n" >> /etc/hosts; fi
+#
+$service iptables stop ; /sbin/chkconfig iptables off
+#
+setenforce 0
+if grep -w "SELINUX=enforcing" /etc/selinux/config; then sed -i 's/enforcing/permissive/' /etc/selinux/config; fi
+#
+stop_app etms
+stop_app screenwriter
+stop_app adfuser
+stop_app courier-server
+#
+sed -i '/^search/c\search ndo.aam.local' /etc/resolv.conf
+#
+$yum --disablerepo=aam* install epel-release centos-release-scl
+#
+$yum --disablerepo=aam* install yum-utils man telnet curl wget sysstat vim vim-enhanced vim-common lsof bind-utils parted tmpwatch lftp ncftp ftp ntp openssh-clients nc cifs-utils mailx
+#
+$yum install cloud-init cloud-utils
+#
+$yum --disablerepo=aam*,docker-*,jenkins update
+#
+### end.

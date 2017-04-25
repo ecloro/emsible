@@ -1,0 +1,56 @@
+#!/usr/bin/env ansible-playbook
+#- hosts: "{{ variable_host | default('localhost') }}"
+- hosts: "{{ remoteHost }}"  ### RUN: --extra-vars "remoteHost=HOSTNAME"
+  tasks:
+     - group_by: key=os_{{ ansible_distribution }}
+
+- name: Update aam-producer (StandAlone)
+
+  # talk to all hosts just so we can group them into OS-groups
+  hosts: os_CentOS
+  gather_facts: False
+  #
+  user: root
+
+  ## VARs
+  vars: 
+    rpmName: aam-producer
+    standAlone: aam-producer-standalone
+    configFile: /etc/etms/circuit_services.cfg
+    rpmLogFile: /var/log/{{ rpmName }}_ansible.log
+
+  tasks:
+
+  - name: Check if RPM is installed
+    command: rpm -q {{ rpmName }}
+    register: rpmCheck
+
+  - name: Exit if RPM isn't installed
+    fail: msg="{{ rpmName }} isn't installed - cannot continue."
+    #when: rpmCheck.stdout.find('is not installed') != -1
+    when: rpmCheck.rc != 0 
+  
+  - name: Add header to LogFile
+    shell: echo -e "\n\n{{ rpmName }} Update ($(date))\n" >> {{ rpmLogFile }} 2>&1
+
+  - name: Update StandAlone RPM
+    yum: name={{ standAlone }} state=latest update_cache=yes
+
+  - name: Update RPM
+    yum: name={{ rpmName }} state=latest update_cache=yes
+    
+  - name: Run DB script
+    shell: cd /etc/etms ; /bin/bash prod-pgsql-db-setup --access local >> {{ rpmLogFile }} 2>&1
+
+  - name: Upgrade DB
+    shell: /usr/bin/CircuitServicesManager.py --config {{ configFile }} --upgrade >> {{ rpmLogFile }} 2>&1
+
+  - name: Start etms service
+    shell: /sbin/service etms start >> {{ rpmLogFile }} 2>&1
+
+  - name: status etms (for logfile)
+    shell: /sbin/service etms status >> {{ rpmLogFile }} 2>&1
+
+  - name: Restart etms service to apply changes
+    shell: /sbin/service etms restart >> {{ rpmLogFile }} 2>&1
+

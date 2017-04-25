@@ -1,0 +1,6 @@
+config_dir: "/mnt/adfuser"
+web_enabled: "0"
+celery_enabled: "1"
+beat_enabled: "1"
+celery_workers: "1"
+

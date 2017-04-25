@@ -1,0 +1,22 @@
+---
+## Source: https://derpops.bike/2014/12/25/ansible-copying-content-from-one-remote-system-to-another
+## Recommended for small files.
+
+- name: Copy Remote-To-Remote (from serverA to serverB ; using slurp)
+  slurp: src={{ item }}
+  with_items:
+    - /etc/keystone/ssl/certs/ca.pem
+    - /etc/keystone/ssl/certs/signing_cert.pem
+    - /etc/keystone/ssl/private/cakey.pem
+    - /etc/keystone/ssl/private/signing_key.pem
+  register: pki_certs
+  run_once: true
+
+- name: write out keystone certs
+  copy:
+    dest: "{{ item.item }}"
+    content: "{{ item.content | b64decode }}"
+    owner: keystone
+    group: keystone
+    mode: 0700
+  with_items: pki_certs.results

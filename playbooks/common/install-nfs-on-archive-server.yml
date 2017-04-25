@@ -1,0 +1,8 @@
+---
+- name: Install and setup NFS on Archive Server
+  hosts: "{{ remoteHost }}" ### -e "remoteHost=HOSTNAME"
+  #-------
+  vars:
+    nfs_exports: { "/archive/jenkins *(rw,sync,no_root_squash)", "/archive/misc *(rw,sync,no_root_squash)" }  
+  roles:
+    - role: nfs

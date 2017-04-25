@@ -1,0 +1,13 @@
+# Usage
+
+## Configure VARs when invoking role:
+```bash
+roles:
+  - role: clean-directory
+    aged:
+      path: "/tmp"
+      user: root
+      days: 30
+    tags:
+      - cron
+```

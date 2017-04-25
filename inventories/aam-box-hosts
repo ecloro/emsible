@@ -1,0 +1,754 @@
+# This is the default ansible 'hosts' file.
+#
+# It should live in /etc/ansible/hosts
+#
+#   - Comments begin with the '#' character
+#   - Blank lines are ignored
+#   - Groups of hosts are delimited by [header] elements
+#   - You can enter hostnames or ip addresses
+#   - A hostname/ip can be a member of multiple groups
+
+# Ex 1: Ungrouped hosts, specify before any group headers.
+
+## green.example.com
+## blue.example.com
+## 192.168.100.1
+## 192.168.100.10
+
+# Ex 2: A collection of hosts belonging to the 'webservers' group
+
+## [webservers]
+## alpha.example.org
+## beta.example.org
+## 192.168.1.100
+## 192.168.1.110
+
+# If you have multiple hosts following a pattern you can specify
+# them like this:
+
+## www[001:006].example.com
+
+# Ex 3: A collection of database servers in the 'dbservers' group
+
+## [dbservers]
+## 
+## db01.intranet.mydomain.net
+## db02.intranet.mydomain.net
+## 10.25.1.56
+## 10.25.1.57
+
+# Here's another example of host ranges, this time there are no
+# leading 0s:
+
+## db-[99:101]-node.example.com
+
+
+[abs]
+abcelsaler ansible_host=10.54.204.3
+abcelx ansible_host=10.54.206.3
+abcgandia ansible_host=10.54.208.3
+abcgranturia ansible_host=10.54.202.3
+abcpark ansible_host=10.54.200.3
+
+[ace]
+acecbagescentre ansible_host=10.55.2.3
+acecerrenteria ansible_host=10.55.8.3
+acecfilmaxgranvia ansible_host=10.55.4.3
+aceclascanas ansible_host=10.55.10.3
+cinemegacinebadalona ansible_host=10.57.10.3
+
+[cdt]
+arcadegouda ansible_host=10.86.184.3
+arcaplexspijkenisse ansible_host=10.86.2.3
+astraklazienaveen ansible_host=10.86.16.3
+atlanticharderwijk ansible_host=10.86.40.3
+biobestbest ansible_host=10.86.38.3
+calypsotheaterwijkbijduurstede ansible_host=10.87.122.3
+castellumalphenaandenrijn ansible_host=10.86.172.3
+chassecinemabreda ansible_host=10.86.196.3
+cinecenteramsterdam ansible_host=10.86.156.3
+cinecityterneuzen ansible_host=10.86.96.3
+cinecityvlissingen ansible_host=10.86.98.3
+cineloungehouten ansible_host=10.86.108.3
+cinemaamstelveen ansible_host=10.86.224.3
+cinemacircuszandvoort ansible_host=10.86.222.3
+cinemactueelbergenopzoom ansible_host=10.86.80.3
+cinemadebalieamsterdam ansible_host=10.87.4.3
+cinemagnusschagen ansible_host=10.86.4.3
+cinemahengelo ansible_host=10.86.164.3
+cinemaleeuwarden ansible_host=10.86.116.3
+cinemamiddelburg ansible_host=10.86.162.3
+cinemaromawijchen ansible_host=10.86.102.3
+cinematexel ansible_host=10.86.18.3
+cinemecede ansible_host=10.86.114.3
+cinemeersehoofddorp ansible_host=10.87.126.3
+cineserviceettenleur ansible_host=10.86.82.3
+cinesneek ansible_host=10.86.34.3
+cinetwinsmalden ansible_host=10.86.106.3
+cineworldbeverwijk ansible_host=10.86.48.3
+citycinemavenlo ansible_host=10.87.138.3
+cityroosendaal ansible_host=10.86.84.3
+davincigoes ansible_host=10.86.100.3
+debiosdrachten ansible_host=10.87.30.3
+debiosheerenveen ansible_host=10.86.8.3
+demeerpaaldronten ansible_host=10.86.44.3
+dok6panningen ansible_host=10.86.22.3
+eyefilminstituutamsterdam ansible_host=10.86.194.3
+figizeist ansible_host=10.86.78.3
+filmaandeslingerhouten ansible_host=10.87.108.3
+filmhuisalmelo ansible_host=10.87.8.3
+filmhuisbussum ansible_host=10.86.250.3
+filmhuisdeblauwekeiveghel ansible_host=10.87.52.3
+filmhuisdegruitpoortdoetinchem ansible_host=10.87.54.3
+filmhuisdekeizerdeventer ansible_host=10.86.228.3
+filmhuisdespiegelheerlen ansible_host=10.87.58.3
+filmhuisdespiegelheerlen ansible_host=10.87.58.3
+filmhuisdidam ansible_host=10.87.62.3
+filmhuisgouda ansible_host=10.87.26.3
+filmhuisharderwijk ansible_host=10.87.72.3
+filmhuisheemskerk ansible_host=10.87.118.3
+filmhuisheiloo ansible_host=10.87.130.3
+filmhuishelmond ansible_host=10.87.28.3
+filmhuislisse ansible_host=10.87.116.3
+filmhuisoldenzaal ansible_host=10.87.80.3
+filmhuisoosterbeek ansible_host=10.87.82.3
+filmhuispurmerend ansible_host=10.87.84.3
+filmhuisrialtoamsterdam ansible_host=10.86.110.3
+filmhuisroermond ansible_host=10.87.12.3
+filmhuisschiedam ansible_host=10.87.86.3
+filmhuissheerenberg ansible_host=10.87.50.3
+filmhuisweesp ansible_host=10.87.132.3
+filmhuiszevenaar ansible_host=10.87.18.3
+filmligaeemsmonddelfzijl ansible_host=10.87.88.3
+filmligahengelorabotheaterhengelo ansible_host=10.87.24.3
+filmligaveendamvanberesteynveendam ansible_host=10.87.90.3
+filmtheateragnietenhoftiel ansible_host=10.86.252.3
+filmtheatercinebergenbergen ansible_host=10.86.254.3
+filmtheaterdebusseloosterhout ansible_host=10.87.92.3
+filmtheaterdefabriekzaandam ansible_host=10.86.248.3
+filmtheaterdegroeneengeloss ansible_host=10.87.94.3
+filmtheaterdeleestwaalwijk ansible_host=10.86.242.3
+filmtheaterdelievevrouwamersfoort ansible_host=10.86.208.3
+filmtheaterdeluxeschagen ansible_host=10.87.96.3
+filmtheaterdenieuwescenevenlo ansible_host=10.86.244.3
+filmtheaterfanfareoudenbosch ansible_host=10.87.68.3
+filmtheatergigantapeldoorn ansible_host=10.86.234.3
+filmtheaterhilversumhilversum ansible_host=10.86.198.3
+filmtheaterlumieremaastricht ansible_host=10.86.186.3
+filmtheaterluxorzutphen ansible_host=10.87.38.3
+filmtheatermoviewwageningen ansible_host=10.87.100.3
+filmtheaterprovadjaalkmaar ansible_host=10.87.16.3
+filmtheaterprovadjaalkmaar ansible_host=10.87.16.3
+filmtheatertbeestgoes ansible_host=10.87.20.3
+filmtheaterzierikzee ansible_host=10.87.104.3
+focusfilmtheaterarnhem ansible_host=10.86.200.3
+foroxityroermond ansible_host=10.87.34.3
+foroxitysittard ansible_host=10.87.32.3
+gotchaweert ansible_host=10.86.10.3
+h5theaterheerlen ansible_host=10.86.76.3
+heerenstraatwageningen ansible_host=10.86.24.3
+hetketelhuisamsterdam ansible_host=10.86.150.3
+hetwittetheaterijmuiden ansible_host=10.87.114.3
+imagesgroningen ansible_host=10.86.168.3
+isalatheatercapelleaandenijssel ansible_host=10.87.40.3
+jtalkmaar ansible_host=10.10.11.133
+jtalphenaandenrijn ansible_host=10.10.19.133
+jtamersfoort ansible_host=10.10.1.133
+jtapeldoorn ansible_host=10.10.17.133
+jtarnhem ansible_host=10.10.9.133
+jtdenbosch ansible_host=10.10.7.133
+jtdeventer ansible_host=10.10.33.133
+jtdoetinchem ansible_host=10.10.21.133
+jtgorinchem ansible_host=10.10.31.133
+jtheerhugowaard ansible_host=10.10.25.133
+jthilversumeuro ansible_host=10.10.5.133
+jthoogeveen ansible_host=10.10.35.133
+jthoogezand ansible_host=10.10.23.133
+jtnijmegencalypso ansible_host=10.10.15.133
+jtnijmegencarolus ansible_host=10.10.13.133
+jtpurmerend ansible_host=10.10.27.133
+jtsteenwijk ansible_host=10.10.39.133
+kriterionamsterdam ansible_host=10.86.154.3
+lantarenvensterrotterdam ansible_host=10.86.188.3
+ledeltheateroostburg ansible_host=10.87.2.3
+lingefilmgeldermalsen ansible_host=10.87.106.3
+louishartloopercomplexutrecht ansible_host=10.86.158.3
+luxnijmegen ansible_host=10.86.144.3
+luxorreuver ansible_host=10.87.124.3
+luxorvenray ansible_host=10.86.12.3
+luxorvenray ansible_host=10.86.12.3
+luxorvenray ansible_host=10.86.12.3
+movieskoopemmeloord ansible_host=10.86.46.3
+movieskoophardenberg ansible_host=10.86.30.3
+movieunlimitedalmelo ansible_host=10.86.50.3
+movieunlimitedkampen ansible_host=10.86.52.3
+movieunlimitedzevenaar ansible_host=10.86.54.3
+parkfilmhuisalphenaandenrijn ansible_host=10.87.22.3
+rkzbiosgroningen ansible_host=10.87.6.3
+royalecht ansible_host=10.86.170.3
+schouwburgdemeersehoofddorp ansible_host=10.87.136.3
+sliekerfilmleeuwarden ansible_host=10.86.238.3
+smokystadskanaal ansible_host=10.86.230.3
+springhaverutrecht ansible_host=10.86.214.3
+stdekolkassen ansible_host=10.86.210.3
+studiokamsterdam ansible_host=10.86.174.3
+taketenuden ansible_host=10.86.104.3
+theateraandeparadedenbosch ansible_host=10.86.26.3
+theaterdefranscheschoolculemborg ansible_host=10.87.42.3
+theaterdemuzenoordwijk ansible_host=10.86.36.3
+theaterdeomvaldiemen ansible_host=10.87.134.3
+theaterdeschalmveldhoven ansible_host=10.86.226.3
+theaterdespeeldoosbaarn ansible_host=10.87.44.3
+theaterhetkruispuntbarendrecht ansible_host=10.87.46.3
+theaterskopeinwinterswijk ansible_host=10.86.32.3
+themoviesamsterdam ansible_host=10.86.152.3
+thoogtutrecht ansible_host=10.86.190.3
+tivolileeuwarden ansible_host=10.86.160.3
+villaluxnijmegen ansible_host=10.86.166.3
+westlandtheaterdenaaldnaaldwijk ansible_host=10.86.178.3
+wolffcatharijneutrecht ansible_host=10.86.72.3
+wolffcineastenschede ansible_host=10.86.58.3
+wolffcinemadegraafhuizen ansible_host=10.86.66.3
+wolffcineramarotterdam ansible_host=10.86.62.3
+wolffcinestarenschede ansible_host=10.86.56.3
+wolffcitymoviesutrecht ansible_host=10.86.74.3
+wolffgroningen ansible_host=10.86.60.3
+wolffplazanieuwegein ansible_host=10.86.68.3
+zininnijverdal ansible_host=10.86.192.3
+
+[cgr]
+complexclermont ansible_host=10.50.88.3
+complexecastillepoitiers ansible_host=10.50.56.3
+complexecolysee ansible_host=10.50.46.3
+complexeolympialarochelle ansible_host=10.50.62.3
+complexesaintlouis ansible_host=10.50.54.3
+fontainelecomte ansible_host=10.50.86.3
+megaangouleme ansible_host=10.50.50.3
+megaauxerre ansible_host=10.50.74.3
+megabayonne ansible_host=10.50.40.3
+megablagnac ansible_host=10.50.14.3
+megabourges ansible_host=10.50.28.3
+megabrignais ansible_host=10.50.8.3
+megabrive ansible_host=10.50.34.3
+megabruaylabuissiere ansible_host=10.50.36.3
+megabuxerolles ansible_host=10.50.58.3
+megacherbourg ansible_host=10.50.38.3
+megacinemajestic ansible_host=10.50.84.3
+megacolmar ansible_host=10.50.24.3
+megadraguignan ansible_host=10.50.82.3
+megaepinay ansible_host=10.50.22.3
+megaevry ansible_host=10.50.42.3
+megafreyming ansible_host=10.50.44.3
+megalameziere ansible_host=10.50.4.3
+megalanester ansible_host=10.50.16.3
+megalarochelle ansible_host=10.50.2.3
+megalattes ansible_host=10.50.18.3
+megaledragonlarochelle ansible_host=10.50.78.3
+megalefrancaisbordeauxcentre ansible_host=10.50.72.3
+megamanteslajolie ansible_host=10.50.20.3
+meganarbonne ansible_host=10.50.26.3
+meganiort ansible_host=10.50.10.3
+megapau ansible_host=10.50.52.3
+megarivesaltes ansible_host=10.50.60.3
+megastsaturninlemans ansible_host=10.50.48.3
+megatarbes ansible_host=10.50.64.3
+megatarnos ansible_host=10.50.32.3
+megatorcy ansible_host=10.50.12.3
+megatours2lions ansible_host=10.50.66.3
+megatourscentre ansible_host=10.50.68.3
+megavillenavedornon ansible_host=10.50.6.3
+megavilleneuvelesbeziers ansible_host=10.50.30.3
+
+[cit]
+artspicturehousecambridge ansible_host=10.59.224.3
+cinemacitynorwichpicturehouse ansible_host=10.59.226.3
+cityscreenyorkpicturehouse ansible_host=10.59.228.3
+claphampicturehouse ansible_host=10.59.230.3
+eastdulwich ansible_host=10.60.14.3
+exeterpicturehouse ansible_host=10.59.232.3
+greenwichpicturehouse ansible_host=10.59.234.3
+hackneypicturehouse ansible_host=10.60.2.3
+harbourlightssouthamptonpicturehouse ansible_host=10.59.236.3
+komediabrighton ansible_host=10.60.8.3
+littletheatrebathpicturehouse ansible_host=10.59.238.3
+phoenixoxfordpicturehouse ansible_host=10.59.240.3
+picturehousecentral ansible_host=10.60.16.3
+picturehousefactliverpool ansible_host=10.59.220.3
+regalpicturehousehenley ansible_host=10.59.242.3
+ritzybrixtonpicturehouse ansible_host=10.59.222.3
+stratfordavonpicturehouse ansible_host=10.59.244.3
+stratfordeastpicturehouse ansible_host=10.59.246.3
+thecameoedinburghpicturehouse ansible_host=10.59.250.3
+thedukeofyorkpicturehousebrighton ansible_host=10.59.252.3
+
+[cnw]
+aberdeenqueenslink ansible_host=10.58.158.3
+aberdeenunionsquare ansible_host=10.58.202.3
+aldershot ansible_host=10.58.96.3
+ashford ansible_host=10.58.204.3
+ashtonunderlyne ansible_host=10.58.206.3
+bedford ansible_host=10.58.140.3
+bexleyheath ansible_host=10.58.142.3
+birminghambroadstreet ansible_host=10.58.184.3
+boldontynewear ansible_host=10.58.208.3
+bolton ansible_host=10.58.160.3
+bradford ansible_host=10.58.102.3
+braintree ansible_host=10.58.210.3
+brighton ansible_host=10.58.212.3
+bristol ansible_host=10.58.144.3
+burtonontrent ansible_host=10.58.162.3
+burystedmunds ansible_host=10.58.146.3
+cardiff ansible_host=10.58.186.3
+castleford ansible_host=10.58.188.3
+chelsea ansible_host=10.58.138.3
+cheltenham ansible_host=10.58.190.3
+chesterfield ansible_host=10.58.150.3
+chichester ansible_host=10.58.104.3
+crawley ansible_host=10.58.192.3
+didcot ansible_host=10.58.120.3
+didsbury ansible_host=10.58.216.3
+dublin ansible_host=10.58.194.3
+dundee ansible_host=10.58.164.3
+eastbourne ansible_host=10.58.106.3
+edinburgh ansible_host=10.58.228.3
+enfield ansible_host=10.58.230.3
+falkirk ansible_host=10.58.232.3
+feltham ansible_host=10.58.196.3
+fulhamroad ansible_host=10.58.100.3
+glasgowparkhead ansible_host=10.58.176.3
+glasgowrenfrewstreet ansible_host=10.58.198.3
+gloucesterquays ansible_host=10.58.88.3
+greenwicho2 ansible_host=10.58.254.3
+harlow ansible_host=10.58.108.3
+haverhill ansible_host=10.58.168.3
+haymarket ansible_host=10.58.180.3
+highwycombe ansible_host=10.58.234.3
+hull ansible_host=10.58.236.3
+huntingdon ansible_host=10.58.152.3
+ilford ansible_host=10.58.170.3
+ipswich ansible_host=10.58.238.3
+jersey ansible_host=10.58.178.3
+leigh ansible_host=10.58.98.3
+llandudno ansible_host=10.58.110.3
+luton ansible_host=10.58.112.3
+middlesbrough ansible_host=10.58.240.3
+miltonkeynes ansible_host=10.58.200.3
+newportgwent ansible_host=10.58.242.3
+newportisleofwight ansible_host=10.58.172.3
+northampton ansible_host=10.58.244.3
+nottingham ansible_host=10.58.246.3
+rochester ansible_host=10.58.218.3
+rugby ansible_host=10.58.174.3
+runcorn ansible_host=10.58.126.3
+sheffield ansible_host=10.58.182.3
+shrewsbury ansible_host=10.58.128.3
+solihull ansible_host=10.58.226.3
+southampton ansible_host=10.58.114.3
+stevenage ansible_host=10.58.248.3
+sthelens ansible_host=10.58.130.3
+stneots ansible_host=10.58.92.3
+stockport ansible_host=10.58.156.3
+swindon ansible_host=10.58.132.3
+telford ansible_host=10.58.86.3
+wakefield ansible_host=10.58.116.3
+wandsworth ansible_host=10.58.222.3
+wembley ansible_host=10.58.94.3
+westindiaquay ansible_host=10.58.220.3
+weymouth ansible_host=10.58.134.3
+witney ansible_host=10.58.250.3
+wolverhampton ansible_host=10.58.252.3
+woodgreen ansible_host=10.58.118.3
+yeovil ansible_host=10.58.136.3
+
+[cst]
+bamberg ansible_host=10.68.4.3
+berlincubix ansible_host=10.68.6.3
+berlinhellersdorf ansible_host=10.68.8.3
+berlinkulturbrauerei ansible_host=10.68.10.3
+bielefeld ansible_host=10.68.18.3
+bremenkristallpalast ansible_host=10.68.22.3
+chemnitz ansible_host=10.68.26.3
+crimmitschau ansible_host=10.68.28.3
+derfilmpalastmagdeburg ansible_host=10.68.86.3
+dusseldorf ansible_host=10.68.32.3
+emden ansible_host=10.68.34.3
+erfurt ansible_host=10.68.36.3
+erlangen ansible_host=10.68.38.3
+filmhauslubeck ansible_host=10.68.80.3
+filmpalastberlintreptow ansible_host=10.68.16.3
+filmpalastfrankfurtammain ansible_host=10.68.42.3
+filmpalastgutersloh ansible_host=10.68.56.3
+filmpalasthagen ansible_host=10.68.58.3
+filmpalastkassel ansible_host=10.68.70.3
+filmpalastmainz ansible_host=10.68.88.3
+filmpalastoberhausen ansible_host=10.68.98.3
+filmpalastosnabrueck ansible_host=10.68.100.3
+frankfurtoder ansible_host=10.68.40.3
+fuldahessen ansible_host=10.68.48.3
+garbsen ansible_host=10.68.52.3
+greifswald ansible_host=10.68.54.3
+ingolstadt ansible_host=10.68.64.3
+jena ansible_host=10.68.66.3
+karlsruhe ansible_host=10.68.68.3
+konstanz ansible_host=10.68.74.3
+leipzig ansible_host=10.68.78.3
+lubeckstadthalle ansible_host=10.68.82.3
+ludwigshafen ansible_host=10.68.84.3
+mainzresidenzandprincess ansible_host=10.68.90.3
+metropolisfrankfurt ansible_host=10.68.44.3
+neubrandenburg ansible_host=10.68.94.3
+rostock ansible_host=10.68.108.3
+rostockcapitol ansible_host=10.68.104.3
+saarbrucken ansible_host=10.68.110.3
+siegen ansible_host=10.68.114.3
+sonycenter ansible_host=10.68.12.3
+stade ansible_host=10.68.116.3
+sternlichtspielebonn ansible_host=10.68.20.3
+stralsund ansible_host=10.68.118.3
+villingenschwenningen ansible_host=10.68.120.3
+waren ansible_host=10.68.122.3
+weimar ansible_host=10.68.124.3
+wildau ansible_host=10.68.126.3
+wismar ansible_host=10.68.128.3
+wolfenbuttel ansible_host=10.68.132.3
+
+[dkd]
+apollonstruer ansible_host=10.88.2.3
+denmarkdigitalkosmorama12haderslev ansible_host=10.88.12.3
+denmarkdigitalvardebiovarde ansible_host=10.88.20.3
+skiveskive ansible_host=10.88.4.3
+
+[dki]
+cinemacenterhelsingor ansible_host=10.88.40.3
+empirebio ansible_host=10.88.24.3
+grandteatretkobenhavn ansible_host=10.88.52.3
+havnarbiotorshavn ansible_host=10.88.26.3
+hjorringbiocenterashjorring ansible_host=10.88.34.3
+lidobiografernevejle ansible_host=10.88.48.3
+megascopehorsens ansible_host=10.88.50.3
+naestvedbionaestved ansible_host=10.88.22.3
+panoramafredericiafredericia ansible_host=10.88.46.3
+panoramamiddelfartmiddelfart ansible_host=10.88.44.3
+panoramaslagelseslagelse ansible_host=10.88.38.3
+rostorv145roskilde ansible_host=10.88.30.3
+scala1234svendborg ansible_host=10.88.28.3
+scalabionykobingfalster ansible_host=10.88.32.3
+scalaholstebro ansible_host=10.88.42.3
+silkeborgbiosilkeborg ansible_host=10.88.36.3
+
+[ejf]
+catcinemesfigueres ansible_host=10.55.32.3
+eximaciasabadell ansible_host=10.55.38.3
+imperialsabadell ansible_host=10.55.36.3
+multicinesolotolot ansible_host=10.55.34.3
+
+[fnk]
+atlastampere ansible_host=10.74.14.3
+fantasiajyvaskyla ansible_host=10.74.20.3
+flamingovantaa ansible_host=10.74.0.3
+kinopalatsihelsinki ansible_host=10.74.4.3
+kinopalatsiturku ansible_host=10.74.16.3
+kuvapalatsilahti ansible_host=10.74.22.3
+omenaespoo ansible_host=10.74.8.3
+plazaoulu ansible_host=10.74.18.3
+plevnatampere ansible_host=10.74.12.3
+promenadipori ansible_host=10.74.24.3
+scalakuopio ansible_host=10.74.28.3
+tennispalatsihelsinki ansible_host=10.74.2.3
+
+[ide]
+luxorfilmpalastwaldorf ansible_host=10.69.2.3
+
+[iei]
+empiremovieplexennis ansible_host=10.60.228.3
+
+[ies]
+ocineblanesbarcelona ansible_host=10.57.12.3
+orihuelaorihuela ansible_host=10.57.14.3
+
+[ifr]
+cinemacasinoantibes ansible_host=10.53.4.3
+concordepontamousson ansible_host=10.53.12.3
+leroyal ansible_host=10.53.10.3
+societecinepolesud ansible_host=10.53.8.3
+
+[iit]
+cinemashowville ansible_host=10.81.4.3
+citrignocosenza ansible_host=10.81.24.3
+montilcastellammare ansible_host=10.81.40.3
+movieplanetbellinzago ansible_host=10.81.10.3
+multiplexfasano ansible_host=10.81.12.3
+odeonscafati ansible_host=10.81.20.3
+politeamatorreannunziata ansible_host=10.81.36.3
+skylinesesto ansible_host=10.81.18.3
+supercinemacastellammare ansible_host=10.81.38.3
+
+[ind]
+glasgowfilmtheatre ansible_host=10.61.14.3
+grosvenorglasgow ansible_host=10.60.190.3
+lightcinema ansible_host=10.61.208.3
+playhouseperth ansible_host=10.60.192.3
+richmixcinemabethnalgreen ansible_host=10.61.48.3
+
+[mcl]
+centraltorquay ansible_host=10.59.212.3
+embassyilfracombe ansible_host=10.59.206.3
+florahelston ansible_host=10.59.200.3
+newcarltonokehampton ansible_host=10.59.208.3
+phoenixfalmouth ansible_host=10.59.198.3
+regalmovieplexcromer ansible_host=10.59.216.3
+regalredruth ansible_host=10.59.218.3
+royalstives ansible_host=10.59.204.3
+savoypenzance ansible_host=10.59.202.3
+studiocoleforde ansible_host=10.59.214.3
+tivolitiverton ansible_host=10.59.210.3
+
+[nda]
+etne ansible_host=10.84.30.3
+haugesundeddakinematografer ansible_host=10.84.2.3
+notodden ansible_host=10.84.116.3
+vosskommkino ansible_host=10.84.44.3
+
+[num]
+bedfordview ansible_host=10.19.10.3
+boardwalkportelizabeth ansible_host=10.19.4.3
+canalwalkcapetown ansible_host=10.19.6.3
+clearwaterjohannesburg ansible_host=10.19.8.3
+emperorspalacekemptonpark ansible_host=10.19.1.3
+galleriadurban ansible_host=10.19.12.3
+grandwestcapetown ansible_host=10.19.14.3
+hydeparkjohannesburg ansible_host=10.19.16.3
+keywestkrugersdorp ansible_host=10.19.18.3
+lochloganbloemfontein ansible_host=10.19.20.3
+menlynparkpretoria ansible_host=10.19.22.3
+paviliondurban ansible_host=10.19.24.3
+theglenjohannesburg ansible_host=10.19.26.3
+vandacapetown ansible_host=10.19.28.3
+walmerparkportelizabeth ansible_host=10.19.30.3
+woodlandspretoria ansible_host=10.19.32.3
+
+[opc]
+bridgestreetlongford ansible_host=10.59.4.3
+drinaghwexford ansible_host=10.59.0.3
+fellspointtralee ansible_host=10.59.2.3
+patrickstreetwaterford ansible_host=10.59.6.3
+
+[sad]
+7infanteslogrono ansible_host=10.57.8.3
+sadecineantiguoberri ansible_host=10.57.4.3
+sadecineprincipe ansible_host=10.57.2.3
+sadecinetrueba ansible_host=10.57.6.3
+
+[skk]
+arcadeslusakazambia ansible_host=10.17.146.3
+baysideblaauwbergstrand ansible_host=10.17.60.3
+bedfordnoveau ansible_host=10.17.96.3
+blueroutecapetowncapetown ansible_host=10.17.66.3
+boardwalkrichardsbay ansible_host=10.17.100.3
+brooklyncommercialpretoria ansible_host=10.17.44.3
+brooklynnouveaupretoria ansible_host=10.17.42.3
+capegate ansible_host=10.17.76.3
+carltoncentrejohannesburg ansible_host=10.17.16.3
+carnivalcitybrakpanjohannesburg ansible_host=10.17.24.3
+cavendishcommercial ansible_host=10.17.62.3
+cedarsquarejohannesburg ansible_host=10.17.86.3
+centurioncenturion ansible_host=10.17.40.3
+cradlestonejohannesburg ansible_host=10.17.112.3
+crestajohannesburgjohannesburg ansible_host=10.17.18.3
+eastgatejohannesburg ansible_host=10.17.32.3
+eastgatezimbabwe ansible_host=10.17.142.3
+eastrandmall ansible_host=10.17.34.3
+eikenstadstellenbosch ansible_host=10.17.70.3
+festivalmall ansible_host=10.17.92.3
+foresthill ansible_host=10.17.116.3
+fourwaysjohannesburg ansible_host=10.17.10.3
+gardenroutemallgeorge ansible_host=10.17.80.3
+gatewaycommercial ansible_host=10.17.30.3
+gatewaynouveauumhlanga ansible_host=10.17.28.3
+greenstone ansible_host=10.17.82.3
+irenemall ansible_host=10.17.64.3
+kolonnadepretoria ansible_host=10.17.46.3
+mallatcarnivalbrakpan ansible_host=10.17.108.3
+mallofthenorthpolokwane ansible_host=10.17.104.3
+maponyasoweto ansible_host=10.17.88.3
+matlosanaklerksdorp ansible_host=10.17.120.3
+mimosabloemfontein ansible_host=10.17.22.3
+mooiriverpotchefstroom ansible_host=10.17.94.3
+musgrave ansible_host=10.17.50.3
+n1citycapetown ansible_host=10.17.106.3
+newtownjohannesburg ansible_host=10.17.118.3
+northcapekimberley ansible_host=10.17.98.3
+northgatejohannesburg ansible_host=10.17.38.3
+northmeadsquarebenoni ansible_host=10.17.84.3
+parow ansible_host=10.17.90.3
+promenadecapetown ansible_host=10.17.102.3
+riversquarevereeniging ansible_host=10.17.36.3
+rosebanknouveaujohannesburg ansible_host=10.17.6.3
+samlevyharare ansible_host=10.17.150.3
+sandton ansible_host=10.17.4.3
+secundasecunda ansible_host=10.17.110.3
+shellybeach ansible_host=10.17.52.3
+somersetmall ansible_host=10.17.68.3
+southgate ansible_host=10.17.12.3
+sterland ansible_host=10.17.2.3
+thebridgeportelizabeth ansible_host=10.17.54.3
+thegrovejohannesburg ansible_host=10.17.114.3
+thezone ansible_host=10.17.8.3
+tygervalleycapetown ansible_host=10.17.58.3
+vanouveaucapetowncapetown ansible_host=10.17.72.3
+watercrestdurban ansible_host=10.17.124.3
+waterfallmallrustenburg ansible_host=10.17.48.3
+westgatezimbabweharare ansible_host=10.17.144.3
+wonderparkpretoria ansible_host=10.17.78.3
+
+[spc]
+spacecinemabarillacenterparma ansible_host=10.80.6.3
+spacecinemacasamassima ansible_host=10.80.18.3
+spacecinemacatanzaro ansible_host=10.80.54.3
+spacecinemacerromaggiore ansible_host=10.80.34.3
+spacecinemacinehallfirenze ansible_host=10.80.52.3
+spacecinemaetnapolisbelpasso ansible_host=10.80.14.3
+spacecinemagherlinda ansible_host=10.80.28.3
+spacecinemagrosseto ansible_host=10.80.56.3
+spacecinemaguidonia ansible_host=10.80.58.3
+spacecinemalagrandemelalugagnanodisona ansible_host=10.80.10.3
+spacecinemalameziaterme ansible_host=10.80.30.3
+spacecinemalefornacibeinasco ansible_host=10.80.4.3
+spacecinemalepiramiditorridiquartesolo ansible_host=10.80.8.3
+spacecinemalevelequartucciu ansible_host=10.80.12.3
+spacecinemalivorno ansible_host=10.80.32.3
+spacecinemamednapoli ansible_host=10.80.26.3
+spacecinemamedusabolognabologna ansible_host=10.80.22.3
+spacecinemamedusarozzano ansible_host=10.80.36.3
+spacecinemamodernorome ansible_host=10.80.24.3
+spacecinemamontebello ansible_host=10.80.38.3
+spacecinemanola ansible_host=10.80.40.3
+spacecinemaodeonmilano ansible_host=10.80.48.3
+spacecinemaparcodemedici ansible_host=10.80.42.3
+spacecinemaportoallegropescara ansible_host=10.80.20.3
+spacecinemaportoanticogenova ansible_host=10.80.50.3
+spacecinemasalerno ansible_host=10.80.44.3
+spacecinemasurbolecce ansible_host=10.80.16.3
+spacecinematerni ansible_host=10.80.60.3
+spacecinematorino ansible_host=10.80.46.3
+spacecinematorribianchemilano ansible_host=10.80.2.3
+
+[tso]
+hemingwayscasinoeastlondon ansible_host=10.19.64.3
+montecasinojohannesburg ansible_host=10.19.68.3
+riversidemallnelspruit ansible_host=10.19.70.3
+silverstarkrugersdorp ansible_host=10.19.72.3
+theridgeemalahleni ansible_host=10.19.66.3
+
+[uau]
+annenhofgraz ansible_host=10.200.100.101
+mecwien ansible_host=10.203.100.101
+scswien ansible_host=10.201.100.101
+
+[ude]
+ameastgate ansible_host=10.110.100.101
+amlausitzpark ansible_host=10.100.100.101
+badoeynhausen ansible_host=10.125.100.101
+dessau ansible_host=10.107.100.101
+duisburg ansible_host=10.105.100.101
+dusseldorf ansible_host=10.109.100.101
+elbeparkdresden ansible_host=10.103.100.101
+flensburg ansible_host=10.123.100.101
+friedrichshain ansible_host=10.106.100.101
+gera ansible_host=10.104.100.101
+gropiuspassagenberlin ansible_host=10.101.100.101
+hurthpark ansible_host=10.115.100.101
+kaiserslautern ansible_host=10.108.100.101
+mundsburghamburg ansible_host=10.120.100.101
+neuss ansible_host=10.114.100.101
+novaeventis ansible_host=10.113.100.101
+othmarschenparkhamburg ansible_host=10.111.100.101
+paderborn ansible_host=10.124.100.101
+potsdam ansible_host=10.117.100.101
+ruhrpark ansible_host=10.116.100.101
+smartcityhamburg ansible_host=10.112.100.101
+wilhelmshaven ansible_host=10.122.100.101
+
+[uit]
+alessandria ansible_host=10.81.148.3
+ancona ansible_host=10.81.180.3
+arezzo ansible_host=10.81.126.3
+bolognameridiana ansible_host=10.81.108.3
+cagliari ansible_host=10.81.158.3
+campibisenzio ansible_host=10.81.162.3
+casoria ansible_host=10.81.112.3
+catania ansible_host=10.81.190.3
+como ansible_host=10.81.142.3
+curno ansible_host=10.81.100.3
+fano ansible_host=10.81.176.3
+ferrara ansible_host=10.81.138.3
+firenze ansible_host=10.81.152.3
+fiumeveneto ansible_host=10.81.134.3
+genovafiumara ansible_host=10.81.106.3
+jesi ansible_host=10.81.182.3
+lissone ansible_host=10.81.110.3
+marconvenezia ansible_host=10.81.154.3
+messina ansible_host=10.81.140.3
+mestre ansible_host=10.81.132.3
+milanobicocca ansible_host=10.81.124.3
+milanocertosa ansible_host=10.81.120.3
+milanofiori ansible_host=10.81.150.3
+molfetta ansible_host=10.81.144.3
+moncalieri ansible_host=10.81.166.3
+palermo ansible_host=10.81.156.3
+perugia ansible_host=10.81.186.3
+pesaro ansible_host=10.81.174.3
+piacenza ansible_host=10.81.130.3
+pioltello ansible_host=10.81.122.3
+portadiroma ansible_host=10.81.170.3
+portosantelpidio ansible_host=10.81.184.3
+reggioemiliareggioemilia ansible_host=10.81.146.3
+romaest ansible_host=10.81.164.3
+romagna ansible_host=10.81.168.3
+romamarconi ansible_host=10.81.102.3
+romaparcoleonardo ansible_host=10.81.172.3
+senigallia ansible_host=10.81.178.3
+sinalunga ansible_host=10.81.118.3
+torinolingotto ansible_host=10.81.160.3
+verona ansible_host=10.81.104.3
+villesse ansible_host=10.81.192.3
+
+[ylo]
+castelldefelsbarcelona ansible_host=10.54.82.3
+fuerteventuralaspalmas ansible_host=10.54.62.3
+parccentraltarragona ansible_host=10.54.80.3
+plazanorte2sansebastiandelosreyes ansible_host=10.54.78.3
+yelmocinesabrera ansible_host=10.54.66.3
+yelmocinesareasur ansible_host=10.54.48.3
+yelmocinesbaricentro ansible_host=10.54.56.3
+yelmocinesberceo ansible_host=10.54.46.3
+yelmocinesboulevard ansible_host=10.54.76.3
+yelmocinesespaciocoruna ansible_host=10.54.22.3
+yelmocinesicariabarcelona ansible_host=10.54.52.3
+yelmocinesidealmadrid ansible_host=10.54.50.3
+yelmocinesimaginalia ansible_host=10.54.26.3
+yelmocinesislaazul ansible_host=10.54.2.3
+yelmocineslaorotava ansible_host=10.54.12.3
+yelmocineslasarenas ansible_host=10.54.70.3
+yelmocineslosprados ansible_host=10.54.6.3
+yelmocineslosrosales ansible_host=10.54.40.3
+yelmocinesmegaparkbilbaobarakaldo ansible_host=10.54.28.3
+yelmocinesmercadocampanar ansible_host=10.54.72.3
+yelmocinesmeridiano ansible_host=10.54.8.3
+yelmocinesocimax ansible_host=10.54.14.3
+yelmocinesplanetocio ansible_host=10.54.34.3
+yelmocinesplazaimperial ansible_host=10.54.44.3
+yelmocinesplazamayor ansible_host=10.54.68.3
+yelmocinesplenilunio ansible_host=10.54.32.3
+yelmocinespuertaalicante ansible_host=10.54.16.3
+yelmocinesrincondelavictoria ansible_host=10.54.18.3
+yelmocinesrivasfutura ansible_host=10.54.30.3
+yelmocinesroquetas ansible_host=10.54.38.3
+yelmocinessantcugat ansible_host=10.54.20.3
+yelmocinestresaguas ansible_host=10.54.42.3
+yelmocinesvecindario ansible_host=10.54.10.3
+yelmocinesvialiaalbacete ansible_host=10.54.74.3
+yelmocinesvialiamalaga ansible_host=10.54.64.3
+yelmocinesvigo ansible_host=10.54.36.3
+yelmocinesvinalopo ansible_host=10.54.24.3
+

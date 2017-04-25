@@ -1,0 +1,68 @@
+---
+required_packages:
+  - name: yum-utils
+    state: latest
+  - name: which
+    state: latest
+  - name: man
+    state: latest
+  - name: telnet
+    state: latest
+  - name: curl
+    state: latest
+  - name: wget
+    state: latest
+  - name: sysstat
+    state: latest
+  - name: vim
+    state: latest
+  - name: vim-enhanced
+    state: latest
+  - name: vim-common
+    state: latest
+  - name: lsof
+    state: latest
+  - name: bind-utils
+    state: latest
+  - name: parted
+    state: latest
+  - name: tmpwatch
+    state: latest
+  - name: lftp
+    state: latest
+  - name: ncftp
+    state: latest
+  - name: ftp
+    state: latest
+  - name: ntp
+    state: latest
+  - name: openssh-clients
+    state: latest
+  - name: nc
+    state: latest
+  - name: cifs-utils
+    state: latest
+  - name: mailx
+    state: latest
+  - name: procps
+    state: latest
+  - name: cloud-init
+    state: latest
+  - name: cloud-utils
+    state: latest
+  - name: util-linux-ng
+    state: latest
+  - name: tar
+    state: latest
+  - name: dos2unix
+    state: latest
+  - name: git
+    state: latest
+  - name: sudo
+    state: latest
+  - name: python-pip
+    state: latest
+  - name: ansible
+    state: latest
+
+

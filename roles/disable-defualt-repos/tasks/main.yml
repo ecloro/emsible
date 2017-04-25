@@ -1,0 +1,32 @@
+---
+- fail: msg='OS not suported'
+  when: ansible_distribution != 'CentOS'
+
+- name: Disable Default yum-repo files
+  replace:
+    dest: '/etc/yum.repos.d/{{ item.name }}'
+    regexp: "^enabled=.*$"
+    replace: "enabled={{ item.enabled }}"
+  with_items: '{{ repo_file_list }}'
+  ignore_errors: yes
+  when: disable_repos == "all" or disable_repos == "default"
+
+- name: Disable epel yum-repo file
+  replace:
+    dest: '/etc/yum.repos.d/{{ item.name }}'
+    regexp: "^enabled=.*$"
+    replace: "enabled={{ item.enabled }}"
+  with_items: '{{ epel_repo_file_list }}'
+  ignore_errors: yes
+  when: disable_repos == "all" or disable_repos == "epel"
+
+- name: Disable artsalliancemedia yum-repo file
+  replace:
+    dest: '/etc/yum.repos.d/{{ item.name }}'
+    regexp: "^enabled=.*$"
+    replace: "enabled={{ item.enabled }}"
+  with_items: '{{ artsalliancemedia_repo_file_list }}'
+  ignore_errors: yes
+  when: disable_repos == "all" or disable_repos == "artsalliancemedia"
+
+

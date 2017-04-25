@@ -1,0 +1,47 @@
+---
+- name: download the Repo if required
+  get_url:
+    url: ftp://updateuser:Updat3Us3r@10.20.254.221/TMS/artsalliancemedia.repo
+    dest: /etc/yum.repos.d/artsalliancemedia.repo
+- name: download the GPG Key if required
+  get_url:
+    url: ftp://updateuser:Updat3Us3r@10.20.254.221/TMS/RPM-GPG-KEY-CentOS-SIG-SCLo
+    dest: /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-SCLo
+- name: install the lifeguard-agent 
+  yum: name=aam-lifeguard-agent enablerepo=aam-test,aam_sclo_rh state=latest
+- name: clean the hosts file if required
+  lineinfile:
+    destfile: /etc/hosts
+    regexp: 'collector.artsalliancemedia.com'
+    line: '%collector.artsalliancemedia.com'
+    state: absent
+- name: edit the hosts file if required 
+  lineinfile:
+    destfile: /etc/hosts
+    regexp: '^collector.artsalliancemedia.com'
+    line: '{{nginx_destination}}   collector.artsalliancemedia.com'
+- name: check the lifeguard_url
+  lineinfile:
+    destfile: /etc/lifeguard-agent/lifeguard-agent-config.yml
+    regexp: '^lifeguard_url:'
+    line: 'lifeguard_url: "http://collector.artsalliancemedia.com/"'
+  register: agent_restart
+- name: check the token from the inventory variable
+  lineinfile:
+    destfile: /etc/lifeguard-agent/lifeguard-agent-config.yml
+    regexp: '^lifeguard_auth_token:'
+    line: "lifeguard_auth_token: '{{ agent_token }}'"
+  register: restart_agent
+- name: lifeguard-agent stop
+  service: 
+    name: lifeguard-agent
+    state: stopped
+  when: restart_agent|changed or agent_restart|changed
+- name: Let the lifeguard-agent service stop properly
+  pause:
+    minutes: 1
+- name: lifeguard-agent start
+  service:
+    name: lifeguard-agent
+    state: started
+  when: restart_agent|changed or agent_restart|changed

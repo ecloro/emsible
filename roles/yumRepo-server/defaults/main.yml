@@ -1,0 +1,28 @@
+---
+yumRepo_pkgs:
+  - name: createrepo
+    state: latest
+  - name: yum-utils
+    state: latest
+  - name: rsync
+    state: latest
+#
+repoDir: "/www/repo"
+#
+indexFile: index.html
+#
+localUser: rpmbuilder
+#
+## Setup subDirs 
+### TODO: Add support for multiple repos
+repoName: Name
+dirTree:
+  - path0: "{{ repoName }}"
+    path1: x86_64
+  - path0: "{{ repoName }}"
+    path1: noarch
+  - path0: "{{ repoName }}"
+    path1: i386
+  - path0: "{{ repoName }}"
+    path1: src
+

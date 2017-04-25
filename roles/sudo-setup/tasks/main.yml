@@ -1,0 +1,19 @@
+---
+- name: install sudo
+  yum: name=sudo state=present update_cache=yes
+
+- name: install libselinux-python
+  yum: name=libselinux-python state=present update_cache=yes
+
+### - shell: sed -i '/Defaults/ s/requiretty/!requiretty/' /etc/sudoers
+#
+### Couldn't achieve these two commands with one..
+
+- name: disable sudo requiretty
+  lineinfile: "dest=/etc/sudoers regexp='^Defaults    requiretty' state=absent"
+
+- name: Replace with negative-requiretty
+  lineinfile: "dest=/etc/sudoers line='Defaults    !requiretty'"      
+
+- name: Enable wheel group (nopassword)
+  lineinfile: "dest=/etc/sudoers regexp='^%wheel' line='%wheel        ALL=(ALL)       NOPASSWD: ALL'"

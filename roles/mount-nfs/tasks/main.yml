@@ -1,0 +1,16 @@
+---
+- name: Install NFS Client RPMs
+  yum: name={{ nfs_rpms }} state=installed update_cache=yes
+  when: mode == "all" or mode == "nfs_install"
+
+- name: Configure idmapd
+  lineinfile: dest=/etc/idmapd.conf regexp="^Domain " insertafter="^#Domain " line="Domain = {{ domain }}"
+  when: mode == "all" or mode == "nfs_install"
+
+- name: Create mountpoint
+  file: path={{ mount_point }} state=directory mode=0775
+  when: mode == "all" or mode == "create_mountpoint"
+
+- name: Mount NFS
+  mount: name={{ mount_point }} src={{ nfs_server }}:{{ server_export }} fstype=nfs opts=rw,_netdev state=mounted
+  when: mode == "all" or mode == "mount"

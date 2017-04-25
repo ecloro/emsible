@@ -1,0 +1,24 @@
+---
+repo_file_list:
+  - name: CentOS-Base.repo
+    enabled: "0"
+  - name: CentOS-Debuginfo.repo
+    enabled: "0"
+  - name: CentOS-Media.repo
+    enabled: "0"
+  - name: CentOS-Vault.repo
+    enabled: "0"
+  - name: CentOS-fasttrack.repo
+    enabled: "0"
+  - name: epel-testing.repo
+    enabled: "0"
+
+epel_repo_file_list:
+  - name: epel.repo
+    enabled: "0"
+
+artsalliancemedia_repo_file_list:
+  - name: artsalliancemedia.repo
+    enabled: "0"
+
+disable_repos: "all"

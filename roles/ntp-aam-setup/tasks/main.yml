@@ -1,0 +1,39 @@
+---
+#- name: Include os-specific variables
+#  include_vars: "{{ ansible_os_family }}_{{ ansible_distribution_major_version }}.yml"
+
+- name: Set the correct timezone.
+  file:
+    src: "/usr/share/zoneinfo/{{ ntp_timezone }}"
+    dest: /etc/localtime
+    state: link
+    force: yes
+
+- name: Install NTP
+  yum: name=ntp state=installed
+  when: ansible_os_family == 'RedHat'
+
+- name: Ensure NTP is running and enabled as configured.
+  service:
+    name: "{{ ntp_daemon }}"
+    state: started
+    enabled: yes
+  when: ntp_enabled
+
+- name: Ensure NTP is stopped and disabled as configured.
+  service:
+    name: "{{ ntp_daemon }}"
+    state: stopped
+    enabled: no
+  when: not ntp_enabled
+
+- name: Generate ntp.conf file
+  template: src=ntp.conf.j2 dest=/etc/ntp.conf
+  notify: restart ntp
+  when: ntp_manage_config
+
+- name: Generate step-tickers file
+  template: src=step-tickers.j2 dest=/etc/ntp/step-tickers
+  notify: restart ntp
+  when: ntp_manage_config
+

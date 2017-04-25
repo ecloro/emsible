@@ -1,0 +1,21 @@
+---
+#-*- external variables: 
+# rpmPath
+# rpmFile
+#-*- Run:
+# -e "rpmPath=/tmp rpmFile=rpmFile.rpm"
+#-i- ARCH: add to rpmPath and repoDir in playbook.
+#-!- Role will fail if the two aren't defined. ---#
+#
+repoDir: /var/www/rpmbuild/noarch
+#
+yumRepoServer: yumRepo-Server
+#
+preReq_pkgs:
+  - name: libselinux-python
+    state: latest
+  - name: createrepo
+    state: latest
+  - name: yum-utils
+    state: latest
+

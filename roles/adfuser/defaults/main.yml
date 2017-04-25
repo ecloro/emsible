@@ -1,0 +1,62 @@
+---
+# defaults file for adfuser role
+
+ADFrpmName: "aam-adfuser"
+
+rpmLogFile: "/var/log/{{ rpmName }}_ansible.log"
+
+host_role: "{{ lookup('env','HOST_ROLE') }}"
+
+rpm_ver: "{{ lookup('env','RPM_VER') }}"
+
+from_repo: "aam-test"
+
+additional_repos:
+  - epel-release
+  - centos-release-scl-rh
+  - centos-release-scl
+
+adf_deps:
+  - iso-codes
+  - keyutils-libs-devel
+  - krb5-devel
+  - libcom_err-devel
+  - libffi-devel
+  - libselinux-devel
+  - libsepol-devel
+  - openssl-devel
+  - postgresql
+  - postgresql-devel
+  - postgresql-libs
+  - python27
+  - python27-python
+  - python27-python-babel
+  - python27-python-devel
+  - python27-python-docutils
+  - python27-python-jinja2
+  - python27-python-libs
+  - python27-python-markupsafe
+  - python27-python-nose
+  - python27-python-pip
+  - python27-python-pygments
+  - python27-python-setuptools
+  - python27-python-simplejson
+  - python27-python-sphinx
+  - python27-python-sqlalchemy
+  - python27-python-virtualenv
+  - python27-python-werkzeug
+  - python27-python-wheel
+  - python27-runtime
+  - scl-utils-build
+  - xml-common
+  - zlib-devel
+  - openssl
+
+services_file: "/etc/adfuser/services"
+
+ws:
+  config_dir: "/mnt/adfuser"
+  web_enabled: "1"
+  celery_enabled: "0"
+  beat_enabled: "0"
+  celery_workers: "0"

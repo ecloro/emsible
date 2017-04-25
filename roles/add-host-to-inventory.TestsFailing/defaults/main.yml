@@ -1,0 +1,10 @@
+---
+add_hosts:
+  - ip: "{{ ansible_default_ipv4.address }}" 
+    name: "{{ inventory_hostname }}"
+    port: 22
+    group: tmpGroup
+
+#host_IP: "{{ ansible_default_ipv4.address }}"
+#host_Hostname: "{{ inventory_hostname }}"
+#host_Port: 22

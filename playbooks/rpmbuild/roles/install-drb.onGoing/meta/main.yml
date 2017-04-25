@@ -1,0 +1,3 @@
+---
+dependencies:
+  - { role: 'install-docker-yum-repo', when: ansible_distribution == 'CentOS' }

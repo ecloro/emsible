@@ -1,0 +1,18 @@
+---
+- hosts: salt-minions
+  remote_user: root
+
+  tasks:
+   - name: add Repositories in AAM Networks.
+     lineinfile: dest=/etc/hosts line="172.30.14.32   salt.artsalliancemedia.com salt.aam.local salt app-p21.aam.local app-p21"
+   - name: also add Repositories in AAM Networks.
+     lineinfile: dest=/etc/hosts line="172.30.14.33   repo.artsalliancemedia.com repo.aam.local repo app-p22.aam.local app-p22"
+   - name: install epel-release
+     yum: name=epel-release state=latest
+   - name: install salt minion
+     yum: name=salt-minion state=latest
+   - name: insert minion id file
+     copy: src=minion_id dest=/etc/salt/minion_id owner=root group=root mode="u+rw,g-wx,o-rwx"
+   - name: insert grain file
+     copy: src=grains dest=/etc/salt/grains owner=root group=root mode="u+rw,g-wx,o-rwx"
+   - service: name=salt-minion enabled=yes state=restarted

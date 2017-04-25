@@ -1,0 +1,77 @@
+---
+- name: Setup lgt2db Server
+  hosts: lgt2-db
+  vars:
+    lgt2app_hostname: lgt2-app
+    lgt2db_hostname: lgt2-db
+    aam_domianName: aam.local
+    lgt1_hostname: app-lgt02
+    lg1_hostname: app-lg02
+
+    ### iptables-full role
+    iptables_filter_rules:
+      - chain: input
+        protocol: tcp
+        source_address: 0.0.0.0/0
+        destination_port: 22
+        target: accept
+      - chain: input
+        protocol: tcp
+        source_address: repo.aam.local
+        destination_port: 443
+        target: accept
+      - chain: input
+        protocol: tcp
+        source_address: repo.aam.local
+        destination_port: 80
+        target: accept
+      - chain: input
+        protocol: tcp
+        source_address: "{{ lgt2app_hostname }}.{{ aam_domianName }}"
+        target: accept
+      - chain: input
+        protocol: tcp
+        source_address: "{{ lgt1_hostname }}.{{ aam_domianName }}"
+        target: accept
+      - chain: input
+        protocol: tcp
+        source_address: "{{ lg1_hostname }}.{{ aam_domianName }}"
+        target: accept
+
+
+    ### postgresql role
+    lgt2_app: "{{ lgt2app_hostname }}.{{ aam_domianName }}"
+    ## postgres version:
+    postgresql_version: 9.5
+    ## Admin user:
+    postgresql_admin_user: "postgres"
+    ## service:
+    postgresql_service_enabled: true
+    ## pgsql Directories on CentOS/RHEL:
+    postgresql_conf_directory: "/var/lib/pgsql/{{postgresql_version}}/data"
+    postgresql_varlib_directory_name: "pgsql"
+    postgresql_data_directory: "/var/lib/{{ postgresql_varlib_directory_name }}/{{postgresql_version}}/data"
+    ## postgresql.conf/Connections and Auth
+    postgresql_listen_addresses:
+      - '*'
+    ## pg_hba.conf:
+    postgresql_pg_hba_custom:
+       #- { type: host, database: all, user: all, address: "{{ lgt2_app }}", method: 'md5', comment: 'LGT2 setup' }
+       - { type: host, database: all, user: all, address: 0.0.0.0/0, method: 'md5', comment: 'LGT2 setup' }
+  
+    ### etc-hosts role
+    etc_hosts_static_ip: true
+    pri_domain_name: "{{ aam_domianName }}"
+
+  roles:
+    - add-lgt2-user
+    - iptables-full
+    - etc-hosts
+    - postgresql
+    - install-repo.aam.local-yum-repo
+  
+  tasks:
+    
+    - name: Setup postgres password
+      postgresql_user: "name={{ postgresql_admin_user }} password={{ postgresql_admin_user }}"
+ 

@@ -1,0 +1,55 @@
+---
+- name: Setup lgt2-app Server
+  hosts: lgt2-app
+  vars:
+    lgt2app_hostname: lgt2-app
+    lgt2db_hostname: lgt2-db
+    aam_domianName: aam.local
+    lgt1_hostname: app-lgt02
+    lg1_hostname: app-lg02
+
+    ### iptables-full role
+    iptables_filter_rules:
+      - chain: input
+        protocol: tcp
+        source_address: 0.0.0.0/0
+        destination_port: 22
+        target: accept
+      - chain: input
+        protocol: tcp
+        source_address: repo.aam.local
+        destination_port: 443
+        target: accept
+      - chain: input
+        protocol: tcp
+        source_address: 0.0.0.0/0
+        destination_port: 80
+        target: accept
+      - chain: input
+        protocol: tcp
+        source_address: 0.0.0.0/0
+        destination_port: 8041
+        target: accept
+      - chain: input
+        protocol: tcp
+        source_address: "{{ lgt2db_hostname }}.{{ aam_domianName }}"
+        target: accept
+      - chain: input
+        protocol: tcp
+        source_address: "{{ lgt1_hostname }}.{{ aam_domianName }}"
+        target: accept
+      - chain: input
+        protocol: tcp
+        source_address: "{{ lg1_hostname }}.{{ aam_domianName }}"
+        target: accept
+
+
+    ### etc-hosts role
+    etc_hosts_static_ip: true
+    pri_domain_name: "{{ aam_domianName }}"
+
+  roles:
+    - add-lgt2-user
+    - iptables-full
+    - etc-hosts
+    - install-repo.aam.local-yum-repo

@@ -1,0 +1,31 @@
+---
+# tasks file for producer
+
+- name: EPEL
+  yum: name=epel-release state=installed
+
+- name: Install aam-producer Dependencies
+  yum: name={{ item }} state=present update_cache=yes
+  with_items:
+   - python
+   - python-pip
+   - python-devel
+   - postgresql-devel
+   - libffi-devel
+   - openssl-devel
+   - libevent-devel
+   - python-setuptools-devel
+   - python-dmidecode
+   - gcc
+   - which
+   - python-imaging
+
+- name: Add header to LogFile
+  shell: echo -e "\n\n{{ rpmName }} Installation ($(date))\n" >> {{ rpmLogFile }} 2>&1
+
+- name: Install StandAlone RPM
+  yum: name={{ standAlone }} disablerepo=aam-dev state=installed
+
+- name: Install RPM
+  yum: name={{ rpmName }} disablerepo=aam-dev state=installed 
+

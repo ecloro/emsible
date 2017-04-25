@@ -1,0 +1,12 @@
+---
+localUpdate: false
+remoteUpdate: true
+#
+preReq_pkgs:
+  - name: libselinux-python
+    state: latest
+#
+add_hosts:
+  - ip: "{{ ansible_default_ipv4.address }}"
+    name: "{{ inventory_hostname }}"
+

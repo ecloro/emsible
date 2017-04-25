@@ -1,0 +1,24 @@
+---
+- name: Host inital config
+  hosts: 3rdplay_adfuser
+  remote_user: root
+  roles:
+  - selinux
+  - disable-defualt-repos
+  - install-epel-scl-repos
+  - { role: ntp-aam-setup, ntp_timezone: "UTC" }
+  - { role: mount-nfs, mode: "all", nfs_server: "adf-nfs.us-west-1.compute.internal", mount_point: "/mnt/adfuser", server_mount_point: "/mnt/adfuser" }
+  tasks:
+  - name: Push SSH keys
+    authorized_key: user=root key={{ item }}
+    with_items:
+      - "{{ lookup('file', '~/.ssh/fake-key.pub') }}"
+  - yum: name=nfs-utils state=installed update_cache=yes
+  - lineinfile: dest=/etc/idmapd.conf regexp="^Domain " insertafter="^#Domain " line="Domain = 3rdline_playground.compute.local"
+  - mount: name=/mnt/adfuser2 src=adf-172.28.19.93:/mnt/adfuser2 fstype=nfs opts=rw,_netdev state=mounted
+
+- name: Install Adfuser
+  hosts: 3rdplay_adfuser
+  user: root
+  roles:
+    - { role: adfuser, rpm_ver: "2.8.1-7_1" }

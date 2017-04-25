@@ -1,0 +1,23 @@
+---
+### http://stackoverflow.com/questions/23877781/how-to-wait-for-server-restart-using-ansible
+### https://support.ansible.com/hc/en-us/articles/201958037-Reboot-a-server-and-wait-for-it-to-come-back
+### https://github.com/while-true-do/ansible-role-system-update
+
+- name: Restart Machine
+  shell: sleep 2 && shutdown -r now "Ansible os-update triggered"
+  async: 1
+  poll: 0
+  become: yes
+  ignore_errors: true
+  when: system_update_restart == "true"
+
+- name: Wait for Restart
+  become: no
+  local_action:
+    module: wait_for
+      host="{{ ansible_default_ipv4.address }}"
+      connect_timeout=10
+      port=22
+      delay=10
+  when: system_update_restart == "true"
+

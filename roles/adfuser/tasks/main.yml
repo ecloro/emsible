@@ -1,0 +1,18 @@
+---
+- name: Log Start of Adfuser RPM Dependencies Install
+  shell: echo -e "\n\n{{ ADFrpmName }} Dependency Installation ($(date))\n" >> {{ rpmLogFile }} 2>&1
+
+- name: Install Adfuser RPM Dependencies
+  yum: name={{ adf_deps }} enablerepo=aam-test state=installed
+
+- name: Log Start of Adfuser RPM Install
+  shell: echo -e "\n\n{{ ADFrpmName }} Installation ($(date))\n" >> {{ rpmLogFile }} 2>&1
+
+- name: Install Adfuser RPM
+  yum: name={{ ADFrpmName }}-0:{{ rpm_ver }}.el6.x86_64 enablerepo={{ from_repo }} state=installed
+
+- name: Load Service variables for configuration
+  include_vars: "{{ host_role }}.yml"
+
+- name: Configure Adfuser Services
+  template: src=templates/services.j2 dest={{ services_file }} owner=root group=root mode=0644

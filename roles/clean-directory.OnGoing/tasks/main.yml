@@ -1,0 +1,54 @@
+---
+#-------
+# Source: http://stackoverflow.com/a/41837196
+#------- 
+- name: find files older than {{ aged.days }}
+  find:
+    paths: "{{ aged.path }}"
+    age: "{{ aged.days }}d"
+    recurse: yes
+    # file_type: any  # Added in ansible 2.3
+  register: collected_files
+
+#-------
+# TODO file_type: Implement when Ansible 2.3 becomes available for CentOS6/7
+#-------
+#- name: find directories older than {{ aged.days }}
+#  find:
+#      paths: "{{ aged.path }}"
+#      age: "{{ aged.days }}d"
+#      recurse: yes
+#      file_type: directory   # Added in ansible 2.3
+#  register: collected_directories
+
+- name: remove collected files
+    file:
+      path: {{ item.path }}
+      state: absent
+    with_items:
+      - collected_files.files
+#-------
+# TODO file_type/Ansible 2.3 
+#-------
+#    with_items: >
+#      {{
+#        collected_files.files
+#        + collected_directories.files
+#      }}
+
+#-------
+# Source: https://github.com/SimpliField/ansible-file-retention
+#-------
+# To skip cron setup:
+# ansible-playbook <playbookName> --skip-tags='cron'
+#-------
+- name: setup cleanup cron job for {{ aged.path }}
+  cron:
+    name: "Cleanup for {{ aged.path }}"
+    minute: "5"
+    hour: "2"
+    job: "find {{ aged.path }} -mindepth 1 -maxdepth 1 -type d -mtime +{{ aged.days }} -print0 | xargs -0 rm -rf"
+    user: "{{ aged.user }}"
+  tags:
+    - cron
+

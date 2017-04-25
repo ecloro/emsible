@@ -1,0 +1,8 @@
+---
+- hosts: '{{ hosts }}'
+  remote_user: root
+  tasks:
+  - name: Service lifeguard-agent checks
+    service:
+      name: lifeguard-agent
+      state: started 

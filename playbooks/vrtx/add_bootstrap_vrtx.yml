@@ -1,0 +1,84 @@
+#!/usr/bin/env ansible-playbook
+- hosts: "{{ remoteHost }}"  ### RUN: --extra-vars "remoteHost=Remote_HOSTNAME" or use the relevant group
+  tasks:
+     - group_by: key=os_{{ ansible_distribution }}
+
+- name: Add/Update bootstrap directory by using the repo
+
+  hosts: os_CentOS:os_Fedora
+  gather_facts: False
+
+  user: root
+  vars: 
+    bootstrapRepo: bootstrap-vrtx
+    gitLabServer: gitlab-int.notdevops.com
+    gitLabGroup: ndo
+    gitUser: rpmbuild
+    gitUserEmail: rpmbuild@notdevops.com
+    btstrpDir: /root/{{ bootstrapRepo }}
+    sshDir: /root/.ssh
+  
+  tasks:
+
+    #- debug: msg="OS is {{ ansible_distribution }}."
+
+    #- name: Skip unreachable servers
+    #  fail: msg="Server unreachable."
+    #  when: unreachable == true
+
+    - set_fact: ts={{ lookup('pipe', 'date +%Y%m%d-%H%M') }}
+
+    ## Vars: DBG
+    #- debug: msg="DBG timestamp {{ ts }} ."
+    #- debug: msg="DBG bootstrapRepo {{ bootstrapRepo }} ."
+    #- debug: msg="DBG btstrpDir {{ btstrpDir }} ."
+    #- debug: msg="DBG archived btstrpDir {{ btstrpDir }}.{{ ts }} ."
+
+    - name: Install git
+      yum: name=git state=installed
+ 
+    - name: Make sure libselinux-python is installed (CentOS7 related)
+      yum:  name=libselinux-python state=installed
+ 
+    - name: Cleanup temp dir (otherwise clone will fail if already exist)
+      file: path=/tmp/{{ bootstrapRepo }} state=absent
+
+    - name: Create .ssh directory (if doesn't exist)
+      file: path={{ sshDir }} state=directory mode=0700
+
+    - name: ensure gitlab is a known host
+      lineinfile:
+        dest: /root/.ssh/known_hosts
+        create: yes
+        state: present
+        line: "{{ lookup('pipe', 'ssh-keyscan -t rsa gitlab-int.notdevops.com') }}"
+        regexp: "^gitlab\\.com"
+
+    - name: Download the Repository
+      git: repo=git@{{ gitLabServer }}:{{ gitLabGroup }}/{{ bootstrapRepo }}.git 
+           dest=/tmp/{{ bootstrapRepo }} 
+           recursive=yes
+ 
+    - name: Clean the Repository Directory (git-garbage)
+      file: path=/tmp/{{ bootstrapRepo }}/{{ item }}
+            state=absent
+      with_items:
+        - install.sh
+        - README.md
+        - .git
+        - infr/.git
+        - .gitignore
+        - .gitmodules
+
+    - name: Move current
+      command: mv {{ btstrpDir }} {{ btstrpDir }}.{{ ts }} removes={{ btstrpDir }}
+     
+    - name: Copy New
+      command: mv /tmp/{{ bootstrapRepo }} {{ btstrpDir }} creates={{ btstrpDir }}
+
+    - name: Add/Update bootstrap alias
+      lineinfile: dest=/root/.bashrc regexp='^alias bootstrap' line='alias bootstrap="cd /root/bootstrap-vrtx ; ./bootstrap"'
+ 
+    - name: Find and clean Old Directories
+      shell: find /root -name '{{ bootstrapRepo }}.*' -type d -mmin +15 -print0 | xargs -0 -r rm -vrf
+

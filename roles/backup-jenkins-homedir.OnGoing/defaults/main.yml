@@ -1,0 +1,18 @@
+---
+## Pre-Req packages
+required_packages:
+  - name: tar
+    state: latest
+  - name: awscli
+    state: latest
+
+## Jenkins
+jenkinsHomeDir: /var/lib/jenkins
+
+## Backup Vars
+tmpDir: /tmp
+backupDir: jenkinsBackup
+excludeFile: exclude_from_backup
+
+
+

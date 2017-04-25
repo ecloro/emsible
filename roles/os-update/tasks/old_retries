@@ -1,0 +1,62 @@
+---
+- fail: msg='OS not suported'
+  when: ansible_os_family != 'RedHat'
+
+- name: Update system
+  package:
+    name=*
+    state=latest
+
+
+#---TESTs--- (Lilly/20170210)
+# (*) Reboot the server if kernel is updated
+# (v) enable/disable with the Reboot tag; Default: enabled
+#---> Example/Enabled in Role:  - { role: 'os-update', tags: [ 'osUpdate', 'Reboot' ] }  
+#---> Example/Disable:          ansible-playbook -e "remoteHost=localhost" yumRepo-server.yml --skip-tags='Reboot' 
+# (v) wait_for host should be refered to the way the local machine sees the remote server; updated to IP Addr.
+
+# Reboot the server if kernel was updated
+### Link: https://codepoets.co.uk/2014/ansible-random-things/
+- name: Check if reboot is required after a kernel update.
+  #shell: if [ $(rpm -q --last kernel|head -1|awk '{print $1}'|sed 's/^kernel-//') != $(uname -r) ]; then echo 'reboot'; else echo 'no'; fi
+  shell: LAST_KERNEL=$(rpm -q --last kernel | perl -pe 's/^kernel-(\S+).*/$1/' | head -1); CURRENT_KERNEL=$(uname -r); if [ $LAST_KERNEL != $CURRENT_KERNEL ]; then echo 'reboot'; else echo 'no'; fi
+  ignore_errors: true
+  register: reboot_hint
+  tags: Reboot
+
+#- name: Reboot Server
+#  debug: msg='Reboot requires:'
+#  #when: reboot_hint.stdout.find("reboot") != -1
+#  when: reboot_hint.stdout == "reboot"
+#  notify: 
+#    - restart server
+#    - wait for server to come back
+#  tags: Reboot
+
+- name: restart machine
+  shell: sleep 3 && shutdown -r now "Ansible os-update - Kernel updated; Reboot triggered"
+  async: 1
+  poll: 0
+  become: true
+  ignore_errors: true
+  when: reboot_hint.stdout.find("reboot") != -1
+  register: rebooting
+  tags: Reboot
+
+- name: waiting for server to come back
+  ##local_action: wait_for host={{ inventory_hostname }} state=started delay=60 timeout=300
+  #local_action: wait_for host={{ ansible_default_ipv4.address }} state=started delay=60 timeout=300   
+  local_action:
+    module: wait_for
+      host={{ ansible_default_ipv4.address }}
+      port=22
+      state=started
+      delay=10
+      timeout=300
+    sudo: false
+  when: rebooting.changed
+  tags: Reboot
+
+
+
+

@@ -1,0 +1,6 @@
+# {{ ansible_managed }}
+# List of NTP servers used by the ntpdate service.
+{% for item in aam_ntp_servers %}
+{{ item }}
+{% endfor %}
+

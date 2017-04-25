@@ -1,0 +1,5 @@
+---
+ssh_users:
+  - name: lgt2
+    comment: lgt2-user
+    key: "{{ lookup('file', 'authorized_keys.lgt2.pub') }}"

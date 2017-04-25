@@ -1,0 +1,54 @@
+---
+- fail: msg='OS not suported'
+  when: ansible_distribution != 'CentOS'
+
+- name: Install PreReq packages.
+  package:
+    name: "{{ item.name }}"
+    state: "{{ item.state }}"
+  with_items: "{{ required_packages }}"
+
+- name: Add exclude file to tmpDir.
+  copy:
+    src: "{{ excludeFile }}"
+    dest: "{{ tmpDir }}/{{ excludeFile }}"
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Setup TimeStamp
+  set_fact:
+    timeStamp: "{{ lookup('pipe', 'date +%Y%m%d%H%M%S') }}"
+
+## |DEBUG|
+#- debug: 
+#    msg: "timeStamp is {{ timeStamp }}."
+
+- name: Archive Jenkins HomeDir.
+  command: 'tar --exclude-from {{ tmpDir }}/{{ excludeFile }} -czf {{ tmpDir }}/{{ backupDir }}_{{ timeStamp }}.tgz {{ jenkinsHomeDir }}'
+
+#-------
+## Following steps aren't working: syncronize -> archive
+#  ## Using rsync
+#  synchronize:
+#    src: "{{ jenkinsHomeDir }}"
+#   dest: "{{ tmpDir }}/{{ backupDir }}"
+#    recursive: yes
+#    rsync_opts:
+#      - "--exclude-from={{ tmpDir }}/{{ excludeFile }"
+
+#- name: Compress Backup Dir.
+#  archive:
+#    path: "{{ tmpDir }}/{{ backupDir }}"
+#    dest: "{{ tmpDir }}/{{ backupDir }}_{{ ts }}.tgz"
+#    remove: True
+#-------
+
+
+
+
+
+
+
+
+

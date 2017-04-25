@@ -1,0 +1,55 @@
+---
+# defaults file for adfuser-packfill role
+
+PKFLrpmName: "aam-adf-packfill"
+
+rpmLogFile: "/var/log/{{ rpmName }}_ansible.log"
+
+host_role: "{{ lookup('env','HOST_ROLE') }}"
+
+rpm_ver: "{{ lookup('env','RPM_VER') }}"
+
+from_repo: "aam-test"
+
+additional_repos:
+  - epel-release
+  - centos-release-scl-rh
+  - centos-release-scl
+
+packfill_deps:
+  - audit-libs-python
+  - gd
+  - iso-codes
+  - libXpm
+  - libcgroup
+  - libselinux-python
+  - libsemanage-python
+  - libxslt
+  - nginx16
+  - nginx16-nginx
+  - nginx16-runtime
+  - policycoreutils
+  - policycoreutils-python
+  - python27
+  - python27-python
+  - python27-python-babel
+  - python27-python-devel
+  - python27-python-docutils
+  - python27-python-jinja2
+  - python27-python-libs
+  - python27-python-markupsafe
+  - python27-python-nose
+  - python27-python-pip
+  - python27-python-pygments
+  - python27-python-setuptools
+  - python27-python-simplejson
+  - python27-python-sphinx
+  - python27-python-sqlalchemy
+  - python27-python-virtualenv
+  - python27-python-werkzeug
+  - python27-python-wheel
+  - python27-runtime
+  - scl-utils-build
+  - setools-libs
+  - setools-libs-python
+  - xml-common

@@ -1,0 +1,11 @@
+---
+- hosts: '{{ hosts }}'
+  remote_user: root
+  tasks:
+  - include: ./tasks/agent_tasks.yml
+    when: ansible_distribution == "CentOS" and ansible_distribution_major_version == "6"
+  - name: Check the Agent status
+    service:
+      name: lifeguard-agent
+      state: started
+    when: ansible_distribution == "CentOS" and ansible_distribution_major_version == "6"

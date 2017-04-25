@@ -1,0 +1,3 @@
+---
+ansible_user: root
+zabbix_proxy: 172.31.65.9,172.30.6.111

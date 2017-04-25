@@ -1,0 +1,19 @@
+---
+- fail: msg="_ERROR_ Can't run - missing 'rpmFile' or/and 'rpmPath'."
+  when: rpmPath is not defined or rpmFile is not defined
+  
+- name: Install preReq packages
+  package: "name='{{ item.name }}' state='{{ item.state }}'"
+  with_items: '{{ preReq_pkgs }}'
+
+- name: Ensure repoDir exist
+  file: "state=directory path={{ repoDir }}"
+
+- name: Copy rpm to yum Repository
+  copy: 
+    src: "{{ rpmPath }}/{{ rpmFile }}"
+    dest: "{{ repoDir }}"
+    mode: 0644
+  notify: reindex repo
+
+

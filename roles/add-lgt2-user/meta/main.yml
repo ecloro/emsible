@@ -1,0 +1,3 @@
+---
+dependencies:
+  - { role: 'sudo-setup', when: ansible_os_family == 'RedHat' }

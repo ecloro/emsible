@@ -1,0 +1,10 @@
+---
+- fail: msg='OS not suported'
+  when: ansible_os_family != 'RedHat'
+
+- name: Install RHEL/CentOS Add-On yum repositories
+  package:
+    name='{{ item.name }}'
+    state='{{ item.state }}'
+  with_items: '{{ required_repos }}'
+

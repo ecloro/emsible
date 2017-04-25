@@ -1,0 +1,63 @@
+---
+# tasks file for iptables
+
+- name: Include distribution specific variables
+  include_vars: "{{ ansible_distribution }}.yml"
+  tags:
+    - iptables
+
+- name: Include release specific variables
+  include_vars: "{{ ansible_distribution_release }}.yml"
+  when: ansible_distribution == "Ubuntu"
+  tags:
+    - iptables
+
+- include: CentOS.yml
+  when: ansible_distribution == "CentOS"
+  tags:
+    - iptables
+
+- include: Ubuntu.yml
+  when: ansible_distribution == "Ubuntu"
+  tags:
+    - iptables
+
+- name: Create iptables configuration
+  become: yes
+  template:
+    src: iptables.j2
+    dest: "{{ iptables_configuration }}"
+    owner: root
+    group: root
+    mode: 0600
+  register: config_result
+  notify:
+    - restart iptables
+  tags:
+    - iptables
+
+- name: Create iptables6 configuration
+  become: yes
+  template:
+    src: iptables6.j2
+    dest: "{{ iptables6_configuration }}"
+    owner: root
+    group: root
+    mode: 0600
+  register: config_result
+  notify:
+    - restart iptables
+  tags:
+    - iptables
+
+- name: Ensure iptables is started and enabled on boot
+  become: yes
+  service:
+    name: "{{ iptables_service_name }}"
+    state: started
+    enabled: yes
+  #async: 20
+  #poll: 0
+  changed_when: False
+  tags:
+    - iptables

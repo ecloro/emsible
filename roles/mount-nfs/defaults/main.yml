@@ -1,0 +1,16 @@
+---
+# defaults file for mount-nfs role
+
+nfs_rpms:
+  - nfs-utils-lib
+  - nfs-utils
+
+mount_point: "{{ lookup('env','MOUNT_POINT') }}"
+
+nfs_server: "{{ lookup('env','NFS_SERVER') }}"
+
+server_export: "{{ lookup('env','SERVER_EXPORT') }}"
+
+domain: "{{ lookup('env','DOMAIN') }}"
+
+mode: "all"

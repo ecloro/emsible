@@ -1,0 +1,4 @@
+---
+# handlers file for adfuser-packfill role
+- name: restart adf-packfill
+  service: name=adf-packfill state=restarted

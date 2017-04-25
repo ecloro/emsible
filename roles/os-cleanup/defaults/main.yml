@@ -1,0 +1,102 @@
+---
+service_list:
+  - name: apmd
+    state: stopped
+    enabled: no
+  - name: atd
+    state: stopped
+    enabled: no
+  - name: cpuspeed
+    state: stopped
+    enabled: no
+  - name: cups
+    state: stopped
+    enabled: no
+  - name: cups-config-daemon
+    state: stopped
+    enabled: no
+  - name: gpm
+    state: stopped
+    enabled: no
+  - name: isdn
+    state: stopped
+    enabled: no
+  - name: netfs
+    state: stopped
+    enabled: no
+  - name: nfslock
+    state: stopped
+    enabled: no
+  - name: openibd
+    state: stopped
+    enabled: no
+  - name: pcmcia
+    state: stopped
+    enabled: no
+  - name: portmap
+    state: stopped
+    enabled: no
+  - name: rawdevices
+    state: stopped
+    enabled: no
+  - name: readahead_early
+    state: stopped
+    enabled: no
+  - name: rpcgssd
+    state: stopped
+    enabled: no
+  - name: rpcidmapd
+    state: stopped
+    enabled: no
+  - name: smartd
+    state: stopped
+    enabled: no
+  - name: avahi-daemon
+    state: stopped
+    enabled: no
+  - name: firstboot
+    state: stopped
+    enabled: no
+  - name: yum-updatesd
+    state: stopped
+    enabled: no
+  - name: sendmail
+    state: stopped
+    enabled: no
+  - name: mcstrans
+    state: stopped
+    enabled: no
+  - name: pcscd
+    state: stopped
+    enabled: no
+  - name: bluetooth
+    state: stopped
+    enabled: no
+  - name: hidd
+    state: stopped
+    enabled: no
+  - name: xinetd
+    state: stopped
+    enabled: no
+  - name: acpid
+    state: stopped
+    enabled: no
+  - name: haldaemon
+    state: stopped
+    enabled: no
+  - name: messagebus
+    state: stopped
+    enabled: no
+  - name: mdmonitor
+    state: stopped
+    enabled: no
+  - name: avahi-daemon.socket
+    state: stopped
+    enabled: no
+  - name: avahi-daemon.service
+    state: stopped
+    enabled: no
+  - name: chrony
+    state: stopped
+    enabled: no
+

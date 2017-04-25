@@ -1,0 +1,16 @@
+---
+- name: Copy Remote-To-Remote (from serverA to serverB ; using rsync)
+    synchronize: 
+      src: {{ path_from_serverA }}
+      dest: {{ path_to_serverB }}
+    delegate_to: {{ serverA }}
+
+- name: Copy Remote-To-Remote (from serverA to serverB ; using slurp)
+  slurp: src={{ item }}
+  with_items:
+    - /etc/keystone/ssl/certs/ca.pem
+    - /etc/keystone/ssl/certs/signing_cert.pem
+    - /etc/keystone/ssl/private/cakey.pem
+    - /etc/keystone/ssl/private/signing_key.pem
+  register: pki_certs
+  run_once: true

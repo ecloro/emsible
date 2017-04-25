@@ -1,0 +1,13 @@
+---
+- name: Install Jenkins on CentOS7
+  hosts: stglab1
+  vars:
+    ## install-jenkins Role:
+    #jenkins_version: "1.644"
+    #jenkins_hostname: "{{ ansible_hostname }}"
+    jenkins_http_port: 8080
+
+  roles:
+    - install-jenkins
+
+

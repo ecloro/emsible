@@ -1,0 +1,167 @@
+[ap-southeast-1_prod-nginx]
+web-ap18 ansible_host=172.31.64.217
+web-ap19 ansible_host=172.31.68.220
+
+[ap-southeast-1_prod-ws]
+web-ap20 ansible_host=172.31.65.20
+web-ap21 ansible_host=172.31.69.120
+
+[ap-southeast-1_prod-wsw]
+web-ap24 ansible_host=172.31.65.72
+web-ap25 ansible_host=172.31.69.103
+web-ap26 ansible_host=172.31.65.43
+web-ap27 ansible_host=172.31.69.18
+
+[ap-southeast-1_prod-tm]
+app-ap12 ansible_host=172.31.65.41
+app-ap13 ansible_host=172.31.69.44
+
+[ap-southeast-1_prod-nfs]
+app-ap14 ansible_host=172.31.65.91
+app-ap15 ansible_host=172.31.69.79
+
+[ap-southeast-1_etms:children]
+ap-southeast-1_prod-ws
+ap-southeast-1_prod-wsw
+ap-southeast-1_prod-tm
+
+[ap-southeast-1_prod-all:children]
+ap-southeast-1_prod-nginx
+ap-southeast-1_etms
+ap-southeast-1_prod-nfs
+
+[us-west-1_prod-nginx]
+web-ap01 ansible_host=172.31.36.81
+web-ap02 ansible_host=172.31.32.117
+
+[us-west-1_prod-ws]
+web-ap03 ansible_host=172.31.36.67
+web-ap04 ansible_host=172.31.32.141
+
+[us-west-1_prod-tm]
+app-ap01 ansible_host=172.31.37.21
+app-ap02 ansible_host=172.31.33.100
+app-ap03 ansible_host=172.31.37.24
+app-ap04 ansible_host=172.31.33.119
+
+[us-west-1_prod-nfs]
+app-ap05 ansible_host=172.31.37.19
+app-ap06 ansible_host=172.31.33.83
+
+[us-west-1_etms:children]
+us-west-1_prod-ws
+us-west-1_prod-tm
+
+[us-west-1_prod-all:children]
+us-west-1_etms
+us-west-1_prod-nginx
+us-west-1_prod-nfs
+
+[us-west-1_adf-ws]
+us-west-1-web-ad-prod-001 ansible_host=172.31.37.84
+us-west-1-web-ad-prod-002 ansible_host=172.31.33.7
+us-west-1-web-ad-prod-003 ansible_host=172.31.37.109
+us-west-1-web-ad-prod-004 ansible_host=172.31.33.56
+
+[us-west-1_adf-tm]
+us-west-1-tm-ad-prod-001 ansible_host=172.31.37.35
+us-west-1-tm-ad-prod-002 ansible_host=172.31.33.101
+
+[us-west-1_adf-pf]
+us-west-1-pf-ad-prod-001 ansible_host=172.31.37.108
+us-west-1-pf-ad-prod-002 ansible_host=172.31.33.124
+
+[us-west-1_adf-nfs]
+us-west-1-nfs-ad-prod-001 ansible_host=172.31.37.60
+
+[us-west-1_adf-app:children]
+us-west-1_adf-ws
+us-west-1_adf-tm
+
+[us-west-1_adf-all:children]
+us-west-1_adf-app
+us-west-1_adf-pf
+us-west-1_adf-nfs
+
+[tc_prod-nginx]
+web-p07 ansible_host=172.30.8.61
+web-p08 ansible_host=172.30.8.62
+
+[tc_prod-ws]
+web-p09 ansible_host=172.30.8.63
+web-p10 ansible_host=172.30.8.64
+web-p19 ansible_host=172.30.8.96
+
+[tc_prod-wsw]
+app-p05 ansible_host=172.30.8.65
+app-p06 ansible_host=172.30.8.66
+app-p18 ansible_host=172.30.8.76
+app-p19 ansible_host=172.30.8.77
+
+[tc_prod-sync]
+app-p07 ansible_host=172.30.8.67
+app-p08 ansible_host=172.30.8.69
+app-p23 ansible_host=172.30.8.79
+app-p24 ansible_host=172.30.8.80
+app-p33 ansible_host=172.30.8.100
+app-p26 ansible_host=172.30.8.70
+
+[tc_prod-tm]
+app-p27 ansible_host=172.30.8.91
+app-p28 ansible_host=172.30.8.92
+app-p29 ansible_host=172.30.8.93
+app-p30 ansible_host=172.30.8.94
+app-p34 ansible_host=172.30.8.102
+
+[tc_prod-nfs]
+app-p09 ansible_host=172.30.8.69
+
+[tc_prod-redis]
+app-p16 ansible_host=172.30.8.75
+
+[tc_prod-waffle]
+app-p32 ansible_host=172.30.8.98
+
+[tc_prod-db]
+db-p01a ansible_host=172.30.8.41
+db-p01b ansible_host=172.30.8.42
+db-p01z ansible_host=172.30.8.50
+
+[tc_etms:children]
+tc_prod-ws
+tc_prod-wsw
+tc_prod-sync
+tc_prod-tm
+
+[tc_prod-all:children]
+tc_etms
+tc_prod-nginx
+tc_prod-nfs
+tc_prod-redis
+tc_prod-waffle
+tc_prod-db
+
+[us-west-2_prod-nginx]
+web-ap11 ansible_host=172.31.48.70
+web-ap12 ansible_host=172.31.52.151
+
+[us-west-2_prod-ws]
+web-ap13 ansible_host=172.31.48.129
+web-ap14 ansible_host=172.31.52.198
+
+[us-west-2_prod-wsw]
+web-ap15 ansible_host=172.31.48.136
+web-ap16 ansible_host=172.31.52.98
+
+[us-west-2_prod-tm]
+app-ap09 ansible_host=172.31.49.76
+app-ap10 ansible_host=172.31.53.37
+
+[us-west-2_etms:children]
+us-west-2_prod-ws
+us-west-2_prod-wsw
+us-west-2_prod-tm
+
+[us-west-2_prod-all:children]
+us-west-2_etms
+us-west-2_prod-nginx

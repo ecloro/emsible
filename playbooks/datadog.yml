@@ -1,0 +1,16 @@
+---
+- hosts: ap-southeast-1_etms
+  roles:
+     - { role: datadog,
+         become: yes
+       }
+  vars:
+    datadog_api_key: "a68f91e675ea29ade015ae52b4aeaae8"
+    datadog_config:
+      log_level: INFO
+    datadog_checks:
+      process:
+        init_config:
+        instances:
+          - name: CircuitServices
+            search_string: ['CircuitServices' ]

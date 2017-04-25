@@ -1,0 +1,11 @@
+#!/usr/bin/env ansible-playbook
+
+#-------
+# Jenkins Daily HomeDir Archive.
+#-------
+
+- hosts: "{{ remoteHost }}"  ### RUN: -e "remoteHost=Remote_HOSTNAME" or use the relevant group
+  roles:
+    - backup-jenkins-homedir.OnGoing
+
+

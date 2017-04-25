@@ -1,0 +1,112 @@
+#!/bin/bash
+
+#
+# On new stglab EC2 instance
+#
+
+yum="dnf -y"
+service="/sbin/service"
+#
+replace_setting ()
+{
+# $1: setting ; $2: 0/1
+setting="$1"
+setup="$2"
+#echo "[$(date +%F-%H%M%S)] Update Setting $setting:"
+sed -i '/'"$setting"'/c\'"$setting"' '"$setup"'' $cloud_config
+}
+#
+stop_app ()
+{
+# $ service name
+prod_name="$1"
+if [ ! -z "$prod_name" ]; then
+  $service $prod_name stop
+else echo "ERROR: no service provided - nothing to do."
+fi
+}
+
+###
+
+cloud_init_cfg="/etc/cloud/cloud.cfg"
+#
+if [ -z "$1" ]; then 
+  echo "Usage: $0 Host [Please specify only first hostname; DomainName ndo.aam.local is used by default]" ; exit
+fi
+hostName="${1}.ndo.aam.local" 
+#
+## cloud-init setup
+if [ -e "$cloud_init_cfg" ]; then
+ cloud_init="$(which cloud-init)"
+ cloud_config="/etc/cloud/cloud.cfg"
+ cloud_cache_dir="/var/lib/cloud"
+ #
+ echo "[$(date +%F-%H%M%S)] Update cloud-init:"
+ ## Remove cloud-init cache directory:
+ rm -rf $cloud_cache_dir
+ ## Enable root login
+ replace_setting "disable_root:" "0"
+ ## Stop updating hostname after reboot (remove update_hostname module)
+ sed -i '/update_hostname/d' $cloud_init_cfg
+ ## init
+ echo "[$(date +%F-%H%M%S)] Initialize cloud-init."
+ $cloud_init init
+else
+ echo "[$(date +%F-%H%M%S)] Cloud-init isn't setup"
+fi
+#
+sed -i '/HOSTNAME=/c\HOSTNAME='"$hostName"'' /etc/sysconfig/network
+hostname $hostName
+if which hostnamectl 1>/dev/null 2>&1; then hostnamectl set-hostname $hostName; fi
+#
+echo -n "
+
+alias ll='ls -l --color=auto' 2>/dev/null
+alias l.='ls -d .* --color=auto' 2>/dev/null
+alias ls='ls --color=auto' 2>/dev/null
+alias vi='vim' 2>/dev/null
+
+" >> /root/.bashrc
+#
+bash /root/.bashrc
+#
+cat > /etc/init.d/motd << "EOF"
+#!/bin/sh
+#
+# motd	Prepares /etc/motd file
+#
+# chkconfig: 2345 99 05
+# description: Prepares /etc/motd file
+#
+### BEGIN INIT INFO
+# Provides: motd
+# Required-Start: network
+# Default-Start: 2345
+# Default-Stop: 0 1 6
+# Short-Description: Prepares /etc/motd file
+# Description: Prepares /etc/motd file
+### END INIT INFO
+
+hostName="$(/bin/hostname)"
+ip_address="$(ip addr | grep "inet " | grep -v "127.0.0.1" | cut -d" " -f6 | cut -d/ -f1 | head -1)"
+os="$(cat /etc/redhat-release)"
+arch="$(uname -i)"
+
+echo -e "\nAppliance:\t${os} ${arch}\nHostname:\t${hostName}\nIP Address:\t${ip_address}\n" > /etc/motd
+
+exit 0
+EOF
+#
+$service iptables stop ; /sbin/chkconfig iptables off
+#
+setenforce 0
+if grep -w "SELINUX=enforcing" /etc/selinux/config; then sed -i 's/enforcing/permissive/' /etc/selinux/config; fi
+#
+sed -i '/^search/c\search ndo.aam.local' /etc/resolv.conf
+#
+#$yum install epel-release centos-release-scl
+$yum install yum-utils man telnet curl wget sysstat vim vim-enhanced vim-common lsof bind-utils parted tmpwatch lftp ncftp ftp ntp openssh-clients nc cifs-utils mailx
+$yum install cloud-init cloud-utils
+$yum update
+#
+### end.

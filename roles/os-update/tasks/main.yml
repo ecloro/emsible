@@ -1,0 +1,9 @@
+---
+- fail: msg='OS not suported'
+  when: ansible_os_family != 'RedHat'
+
+- name: Update system
+  package: name=* state=latest
+  notify:
+    - Restart Machine
+    - Wait for Restart

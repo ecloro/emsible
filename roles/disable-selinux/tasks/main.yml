@@ -1,0 +1,9 @@
+---
+- name: Dependency - libselinux-python
+  yum:  name=libselinux-python state=installed
+  when: "ansible_os_family == 'RedHat' and ansible_distribution_major_version == '7'"
+
+- name: disable SELinux
+  selinux: state=disabled
+  when: ansible_os_family == 'RedHat'
+

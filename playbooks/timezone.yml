@@ -1,0 +1,7 @@
+---
+- hosts: ap-southeast-1_all
+  remote_user: root
+  roles: 
+     - {role: timezone,
+        zonename: "Asia/Singapore"
+       }

@@ -1,0 +1,16 @@
+---
+- name: Install Dependent Repostories
+  yum: name={{ additional_repos }} state=installed
+
+- name: Log Start of Nginx RPM Dependencies Install
+  shell: echo -e "\n\n{{ NginxrpmName }} Dependency Installation ($(date))\n" >> {{ rpmLogFile }} 2>&1
+
+- name: Install Nginx Packfill RPM Dependencies
+  yum: name={{ nginx_deps }} state=latest
+
+- name: Log Start of Nginx RPM Install
+  shell: echo -e "\n\n{{ NginxrpmName }} Installation ($(date))\n" >> {{ rpmLogFile }} 2>&1
+
+- name: Install Nginx RPM
+  yum: name={{ NginxrpmName }} state=latest
+  notify: restart nginx

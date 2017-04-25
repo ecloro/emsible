@@ -1,0 +1,43 @@
+[3rdplay_prws]
+172.28.19.78 ansible-host=172.28.19.78
+
+[3rdplay_prsync]
+172.28.19.78 ansible-host=172.28.19.78
+
+[3rdplay_prwsw]
+172.28.19.78 ansible-host=172.28.19.78
+
+[3rdplay_prtm]
+172.28.19.78 ansible-host=172.28.19.78
+
+[3rdplay_adws]
+172.28.19.82 ansible-host=172.28.19.82
+
+[3rdplay_adtm]
+172.28.19.83 ansible-host=172.28.19.83
+
+[3rdplay_courier]
+172.28.19.84 ansible-host=172.28.19.84
+
+[3rdplay_scw]
+172.28.19.85 ansible-host=172.28.19.85
+172.28.19.86 ansible-host=172.28.19.86
+172.28.19.89 ansible-host=172.28.19.89
+172.28.19.94 ansible-host=172.28.19.94
+
+[3rdplay_etms:children]
+3rdplay_prws
+3rdplay_prwsw
+3rdplay_prtm
+3rdplay_prsync
+
+[3rdplay_adfuser:children]
+3rdplay_adws
+3rdplay_adtm
+
+[3rdplay_all:children]
+3rdplay_etms
+3rdplay_adfuser
+3rdplay_scw
+3rdplay_courier
+

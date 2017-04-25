@@ -1,0 +1,10 @@
+---
+- name: Include os-specific variables
+  include_vars: "{{ ansible_os_family }}_{{ ansible_distribution_major_version }}.yml"
+
+#- debug: msg="rpmName is {{ rpmName }} and firewall_service is {{ firewall_service }} ."
+ 
+- name: Check package
+  yum: name={{ rpmName }} state=present
+  notify: stop disable firewall
+

@@ -1,0 +1,16 @@
+---
+- fail: msg='OS not suported'
+  when: ansible_os_family != 'RedHat'
+
+### Not currently used.
+#- name: Include package names to install in '{{ ansible_os_family }}'
+#  include_vars: '{{ ansible_os_family }}_vars.yml'
+
+- name: Install Addon Packages.
+  package:
+    name='{{ item.name }}'
+    state='{{ item.state }}'
+  with_items: '{{ required_packages }}'
+
+### NotInUse:
+#- include: 'install_pip.yml'

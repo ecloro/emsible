@@ -1,0 +1,8 @@
+---
+- name: setup email alias for root
+  lineinfile: 
+    dest: /etc/aliases 
+    regexp: "^{{ item.user }}:" 
+    line: "{{ item.user }}: {{ item.alias }}"
+  with_items: '{{ aliases }}'
+  notify: update aliases
